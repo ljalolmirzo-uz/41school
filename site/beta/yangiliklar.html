@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Yangiliklar | 41-Maktab 2.0</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+  <meta name="description" content="41-Maktab 2.0 — yangiliklar. Maktab hayoti, tadbirlar va muhim e'lonlar. 2026/2027 o'quv yili.">
+  <meta property="og:title" content="Yangiliklar | 41-Maktab 2.0">
+  <meta property="og:description" content="Maktabdagi yangi voqealar, tadbirlar va e'lonlar.">
+  <meta property="og:image" content="https://41school.github.io/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://41school.github.io/beta/yangiliklar.html">
+  <meta property="og:site_name" content="41-Maktab">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>✨ 2026/2027-o'quv yili boshlandi</span>
+      <span class="loc">📍 Farg'ona viloyati, Bag'dod tumani</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img src="../images/logo.png" alt="41-Maktab logotipi">
+        <div class="brand-text">
+          <span class="brand-name">41-Maktab <span class="beta-chip">BETA</span></span>
+          <span class="brand-tag">Bilim — kelajak kaliti</span>
+        </div>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li class="nav-dropdown">
+            <a href="index.html" class="nav-drop-btn">Asosiy
+              <svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </a>
+            <div class="nav-dropdown-menu">
+              <a href="index.html"><span class="dd-ico">🏠</span>Asosiy</a>
+              <a href="yangiliklar.html" class="active"><span class="dd-ico">📰</span>Yangiliklar</a>
+              <a href="ai.html"><span class="dd-ico">🤖</span>Jalolmirzo AI</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="nav-toggle" id="navToggle" aria-label="Menyu">
+          <span></span><span></span><span></span>
+        </button>
+        <button class="icon-btn" id="darkToggle" aria-label="Tungi rejim">🌙</button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="navBackdrop"></div>
+
+  <!-- SAHIFA HERO -->
+  <section class="page-hero">
+    <div class="hero-blobs" aria-hidden="true"></div>
+    <div class="container">
+      <span class="eyebrow">📢 Yangiliklar</span>
+      <h1>Maktabdagi yangi voqealar</h1>
+      <p>Oxirgi o'zgarishlar, tadbirlar va muhim e'lonlardan doim xabardor bo'ling.</p>
+    </div>
+  </section>
+
+  <!-- YANGILIKLAR -->
+  <section class="section np-section">
+    <div class="container">
+      <div class="np-toolbar reveal" id="npToolbar">
+        <div class="np-filters" id="npFilters">
+          <button class="np-chip active" data-cat="all">Barchasi</button>
+          <button class="np-chip" data-cat="talim">📖 Ta'lim</button>
+          <button class="np-chip" data-cat="texnologiya">💻 Texnologiya</button>
+          <button class="np-chip" data-cat="tadbir">🎪 Tadbirot</button>
+        </div>
+        <span class="np-count" id="npCount"></span>
+      </div>
+
+      <div id="npLayout" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="np-modal" id="npModal" aria-hidden="true">
+    <div class="np-modal-backdrop" data-np-close></div>
+    <div class="np-modal-card" role="dialog" aria-modal="true" aria-label="Yangilik batafsil">
+      <button class="np-modal-close" data-np-close aria-label="Yopish">✕</button>
+      <div class="np-modal-body" id="npModalBody"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="f-brand">
+            <img src="../images/logo.png" alt="41-Maktab">
+            <b>41-Maktab <span class="beta-chip">BETA</span></b>
+          </div>
+          <p class="footer-about">
+            Zamonaviy ta'lim, innovatsion yondashuv va yorqin kelajak sari.
+            2026/2027-o'quv yilida maktabimiz yangi avlod veb-saytiga o'tmoqda.
+          </p>
+        </div>
+        <div>
+          <h4>Tezkor havolalar</h4>
+          <div class="footer-links">
+            <a href="index.html">Bosh sahifa</a>
+            <a href="index.html#bolimlar">Bo'limlar</a>
+            <a href="index.html#jadval">Dars jadvali</a>
+            <a href="yangiliklar.html">Yangiliklar</a>
+            <a href="ai.html">Jalolmirzo AI</a>
+            <a href="info.html">Beta haqida</a>
+          </div>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul class="footer-contact">
+            <li>📍 <span>Bag'dod tumani, Farg'ona viloyati</span></li>
+            <li>📞 <a href="tel:+998901234567">+998 90 123 45 67</a></li>
+            <li>📧 <a href="mailto:info@41maktab.uz">info@41maktab.uz</a></li>
+            <li>💬 <a href="https://t.me/maktabJalolmirzo_bot" target="_blank" rel="noopener noreferrer">@41maktab_bot</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>O'quv yili</h4>
+          <ul class="f-meta">
+            <li><span>Yil</span><span>2026/2027</span></li>
+            <li><span>Ish kunlari</span><span>Dushanba – Shanba</span></li>
+            <li><span>Boshlanish</span><span>08:00</span></li>
+            <li><span>Katta tanaffus</span><span>11:15 – 11:35</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 41-Maktab. Barcha huquqlar himoyalangan.</span>
+        <span><a href="../index.html">Asosiy versiyaga qaytish</a> · <a href="info.html">Beta haqida</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/news.js"></script>
+</body>
+</html>

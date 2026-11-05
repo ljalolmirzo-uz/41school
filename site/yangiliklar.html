@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yangiliklar | 41-Maktab</title>
+    <meta name="description" content="41-maktabdagi so'nggi yangiliklar, tadbirlar va e'lonlar">
+    <meta property="og:title" content="Yangiliklar | 41-Maktab">
+    <meta property="og:description" content="41-maktabdagi so'nggi yangiliklar, tadbirlar va e'lonlar">
+    <meta property="og:image" content="https://41school.github.io/images/logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://41school.github.io/yangiliklar.html">
+    <meta property="og:site_name" content="41-Maktab">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .news-card.large {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+      color: white;
+    }
+
+    .news-card.large .news-body h3 {
+      color: #10a37f;
+      font-size: 28px;
+    }
+
+    .news-card.large .news-body p {
+      color: #cbd5e1;
+    }
+
+    .news-card.large .news-body time {
+      background: rgba(16, 163, 127, 0.2);
+      color: #10a37f;
+    }
+
+    .read-more-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #10a37f, #0f8c6b);
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .read-more-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(16, 163, 127, 0.3);
+    }
+
+    .feature-list {
+      margin: 15px 0;
+      padding-left: 20px;
+    }
+
+    .feature-list li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #10a37f, #0f8c6b);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .future-plan {
+      background: rgba(16, 163, 127, 0.1);
+      border-left: 3px solid #10a37f;
+      padding: 12px 16px;
+      margin: 15px 0;
+      border-radius: 8px;
+    }
+
+    .warning-note {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 3px solid #f59e0b;
+      padding: 12px 16px;
+      margin: 15px 0;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    /* RASM STILLARI - TO'LIQ KO'RINISH */
+    .news-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 20px 20px 0 0;
+      transition: transform 0.3s ease;
+      background: linear-gradient(135deg, #1e2a3a, #0f1a24);
+    }
+
+    .news-card.large img {
+      height: 280px;
+    }
+
+    .news-card:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Rasm yuklanmasa placeholder */
+    .news-card img[src=""] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    body.dark .news-card.large {
+      background: linear-gradient(135deg, #1e2a3a, #0a121c);
+    }
+
+    @media (max-width: 768px) {
+      .news-card.large {
+        grid-column: span 1;
+      }
+      .news-card.large .news-body h3 {
+        font-size: 22px;
+      }
+      .news-card img {
+        height: 160px;
+      }
+      .news-card.large img {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/logo.png" alt="41-maktab logotipi" width="50" height="50">
+        <div class="brand">
+          <h1>41-Maktab</h1>
+          <p>Bilim – kelajak kaliti</p>
+        </div>
+      </div>
+      <nav class="nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">Asosiy</a></li>
+          <li><a href="yangiliklar.html" class="active">Yangiliklar</a></li>
+          <li><a href="loyihalar.html">Loyihalar</a></li>
+          <li><a href="testlar.html">Testlar</a></li>
+          <li><a href="kutubxona.html">Kutubxona</a></li>
+          <li><a href="ai.html">AI</a></li>
+          <li><a href="aloqa.html">Aloqa</a></li>
+        
+          <li><a href="beta/index.html" class="nav-beta-btn">✨ Beta</a></li>
+        </ul>
+      </nav>
+      <div class="nav-tools">
+        <button id="dark-mode-toggle" class="dark-btn" aria-label="Qorong'u rejim">🌙</button>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menyu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- PAGE TITLE -->
+  <section class="page-title news-title">
+    <div class="container">
+      <h1>📢 Yangiliklar</h1>
+      <p>41-maktabdagi so'nggi yangiliklar, tadbirlar va e'lonlar</p>
+    </div>
+    <div class="floating-element"></div>
+  </section>
+
+  <!-- NEWS SECTION -->
+  <section class="news">
+    <div class="container news-grid">
+
+      <article class="news-card large">
+        <img src="images/ai-news.jpg" alt="Jalolmirzo AI" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%2310a37f\'%3E%3Cpath d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z\'/%3E%3C/svg%3E'">
+        <div class="news-body">
+          <div class="version-badge">🚀 Yangi loyiha</div>
+          <h3>🤖 Jalolmirzo AI — maktabning AI yordamchisi</h3>
+          <p>Jalolmirzo AI yordamchi onlayn ishlayapti — o'quvchilar uchun fanlar bo'yicha savollarga yordam beradi.</p>
+
+          <h4>✨ Imkoniyatlar:</h4>
+          <ul class="feature-list">
+            <li>📘 Matematika, fizika, ona tili va boshqa fanlar bo'yicha yordam</li>
+            <li>💻 Kod yozish va tushuntirish</li>
+            <li>🔁 Suhbat tarixi brauzerda saqlanadi</li>
+          </ul>
+
+          <p>Yordamchi barqaror rivojlanmoqda — tez orada o'zbek tilida yanada yaxshi tushunadi va tezroq javob beradi.</p>
+
+          <a href="ai.html" class="read-more-btn">🤖 AI bilan suhbatlashish</a>
+          <time datetime="2026-03-24">📅 24-mart, 2026</time>
+        </div>
+      </article>
+
+      <!-- Yangilik 2: Kutubxona bo'limi -->
+      <article class="news-card">
+        <img src="images/library-news.jpg" alt="Kutubxona bo'limi" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%2310a37f\'%3E%3Cpath d=\'M4 6h16v2H4V6zm2-4h12v2H6V2zm16 8H2v12h20V10zm-2 10H4v-8h16v8z\'/%3E%3C/svg%3E'">
+        <div class="news-body">
+          <h3>📚 Kutubxona bo'limi tayyorlanmoqda</h3>
+          <p>Maktab kutubxonasi bo'limi uchun tayyorgarlik ishlari olib borilmoqda.</p>
+          <ul class="feature-list">
+            <li>📖 O'zbek adabiyoti bo'yicha kitoblar</li>
+            <li>📱 Brauzerda onlayn o'qish</li>
+            <li>⬇️ Kitoblarni yuklab olish</li>
+          </ul>
+          <p><strong>ℹ️ Eslatma:</strong> Bo'lim tez orada ishga tushadi — yangiliklarni kuzatib boring!</p>
+          <a href="kutubxona.html" class="read-more-btn">📖 Kutubxonaga o'tish</a>
+          <time datetime="2026-03-20">📅 20-mart, 2026</time>
+        </div>
+      </article>
+
+      <!-- Yangilik 3: Onlayn testlar -->
+      <article class="news-card">
+        <img src="images/website.jpg" alt="Onlayn testlar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%2310a37f\'%3E%3Cpath d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z\'/%3E%3C/svg%3E'">
+        <div class="news-body">
+          <h3>📝 Onlayn test tizimi faol ishlayapti</h3>
+          <p>5–10-sinf o'quvchilari uchun onlayn testlar: sinf va fanni tanlang, topshiring va natijangizni darhol ko'ring.</p>
+          <ul class="feature-list">
+            <li>🎯 10 ta sinf bo'yicha testlar</li>
+            <li>📊 Natija va tahlil darhol chiqadi</li>
+            <li>🔄 Istalgancha takrorlash mumkin</li>
+          </ul>
+          <a href="testlar.html" class="read-more-btn">📝 Testlarni boshlash</a>
+          <time datetime="2026-03-18">📅 18-mart, 2026</time>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 41-Maktab. Barcha huquqlar himoyalangan.</p>
+      <address>
+        <p>👨‍💼 Direktor: Ziyayeva Ozodaxon</p>
+        <p>👨‍💻 Admin: Latifjonov Jalolmirzo</p>
+      </address>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

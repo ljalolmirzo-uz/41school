@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Testlar | 41-Maktab 2.0</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+  <meta name="description" content="41-Maktab 2.0 — online testlar. Sinf va faningizni tanlang, bilimingizni sinab ko'ring. Natija va batafsil tahlil darhol.">
+  <meta property="og:title" content="Testlar | 41-Maktab 2.0">
+  <meta property="og:description" content="Sinfingiz va fanningizni tanlab, bilimingizni sinab ko'ring.">
+  <meta property="og:image" content="https://41school.github.io/images/logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://41school.github.io/beta/testlar.html">
+  <meta property="og:site_name" content="41-Maktab">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============ TESTLAR BO'LIMI (beta) ============ */
+    .tst-section { padding: 48px 0 72px; }
+    .tst-screen { display: none; animation: tstIn .35s ease; }
+    .tst-screen.active { display: block; }
+    @keyframes tstIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    .tst-head { text-align: center; margin-bottom: 28px; }
+    .tst-head h2 { font-size: clamp(24px, 4vw, 32px); font-weight: 800; letter-spacing: -.02em; }
+    .tst-head p { color: var(--slate-500); margin-top: 6px; }
+
+    /* --- sinf tanlash --- */
+    .cls-block { margin-bottom: 26px; }
+    .cls-label { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; margin-bottom: 12px; }
+    .cls-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .cls-pill {
+      border: 1.5px solid var(--slate-200); background: var(--white); color: var(--slate-700);
+      border-radius: 999px; padding: 9px 18px; font: 600 14px 'Manrope', sans-serif; cursor: pointer;
+      transition: all .18s ease;
+    }
+    .cls-pill:hover { border-color: var(--blue-500); color: var(--blue-700); transform: translateY(-1px); }
+    .cls-pill.active { background: var(--blue-600); border-color: var(--blue-600); color: #fff; box-shadow: 0 6px 16px rgba(37, 99, 235, .28); }
+
+    /* --- fanlar --- */
+    .subj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; max-width: 1000px; margin: 0 auto; }
+    .subj-card {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+      background: var(--white); border: 1.5px solid var(--slate-200); border-radius: var(--radius-lg);
+      padding: 22px 20px; cursor: pointer; text-align: left; transition: all .2s ease;
+      box-shadow: var(--shadow-sm); font-family: 'Manrope', sans-serif;
+    }
+    .subj-card:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--blue-500); box-shadow: var(--shadow-md); }
+    .subj-card:disabled { opacity: .5; cursor: not-allowed; }
+    .subj-icon { font-size: 34px; line-height: 1; }
+    .subj-name { font-size: 17px; font-weight: 800; color: var(--ink); }
+    .subj-meta { font-size: 12.5px; color: var(--slate-500); font-weight: 600; }
+    .subj-card.katta {
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-500)); border-color: transparent;
+    }
+    .subj-card.katta .subj-name { color: #fff; }
+    .subj-card.katta .subj-meta { color: rgba(255, 255, 255, .82); }
+
+    /* --- forma --- */
+    .form-card {
+      max-width: 480px; margin: 0 auto; background: var(--white); border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-lg); padding: 30px 26px; box-shadow: var(--shadow-md);
+    }
+    .form-icon { font-size: 40px; text-align: center; display: block; margin-bottom: 8px; }
+    .form-card h3 { text-align: center; font-size: 21px; font-weight: 800; margin-bottom: 4px; }
+    .form-sub { text-align: center; color: var(--slate-500); font-size: 13.5px; margin-bottom: 20px; }
+    .form-row { margin-bottom: 14px; }
+    .form-row label { display: block; font-size: 13px; font-weight: 700; color: var(--slate-600); margin-bottom: 6px; }
+    .form-row input {
+      width: 100%; border: 1.5px solid var(--slate-200); border-radius: var(--radius-md);
+      padding: 12px 14px; font: 500 15px 'Manrope', sans-serif; color: var(--ink); background: var(--slate-100);
+      outline: none; transition: all .18s ease;
+    }
+    .form-row input:focus { border-color: var(--blue-500); background: var(--white); box-shadow: 0 0 0 3px rgba(59, 130, 246, .15); }
+    .form-err { display: none; color: #dc2626; font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 10px; }
+    .form-err.show { display: block; }
+    .form-actions { display: flex; gap: 10px; margin-top: 18px; }
+    .form-actions .tbtn { flex: 1; }
+    .form-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-row select {
+      width: 100%; padding: 12px 14px; border: 1.5px solid var(--slate-200); border-radius: 12px;
+      font-size: 15px; font-weight: 600; font-family: inherit; color: var(--slate-800); background: var(--white);
+    }
+    .form-row select:focus { outline: none; border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(59, 130, 246, .15); }
+    .form-hint {
+      background: #fffbeb; border: 1.5px solid #fde68a; color: #92400e; font-size: 12.5px; line-height: 1.5;
+      padding: 10px 12px; border-radius: 12px; margin-top: 14px;
+    }
+    .pin-card { text-align: center; }
+    .pin-big {
+      font-size: 44px; font-weight: 800; letter-spacing: 14px; text-indent: 14px; color: var(--blue-600);
+      background: var(--blue-50); border: 2px dashed var(--blue-300); border-radius: 16px;
+      padding: 18px 0; margin-bottom: 14px; font-variant-numeric: tabular-nums;
+    }
+    .pin-warn {
+      background: #fffbeb; border: 1.5px solid #fde68a; color: #92400e; font-size: 13px; line-height: 1.55;
+      padding: 12px 14px; border-radius: 12px; text-align: left; margin-bottom: 4px;
+    }
+    body.dark .form-row select { background: #0b1220; border-color: #223049; color: #f1f5f9; }
+    body.dark .pin-big { background: rgba(59, 130, 246, .08); border-color: rgba(59, 130, 246, .4); }
+    /* Profil avatarlari (bir xil rang spektri butun ilovada) */
+    .f-prof { display: flex; align-items: center; gap: 12px; background: var(--blue-50); border: 1.5px solid var(--blue-100);
+      border-radius: 14px; padding: 12px 14px; margin-bottom: 16px; }
+    .f-prof-av { width: 46px; height: 46px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 18px; }
+    .f-prof-av.c0 { background: linear-gradient(135deg, #4f7cff, #6d5cff); }
+    .f-prof-av.c1 { background: linear-gradient(135deg, #8b5cf6, #d946ef); }
+    .f-prof-av.c2 { background: linear-gradient(135deg, #0ea5e9, #22d3ee); }
+    .f-prof-av.c3 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .f-prof-av.c4 { background: linear-gradient(135deg, #10b981, #14b8a6); }
+    .f-prof-av.c5 { background: linear-gradient(135deg, #ec4899, #f43f5e); }
+    .f-prof-info b { display: block; font-size: 15px; font-weight: 800; color: var(--slate-800); }
+    .f-prof-info i { display: block; color: var(--slate-500); font-size: 12.5px; font-style: normal; font-weight: 600; margin-top: 2px; }
+    .form-hint.ok { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+    .pin-prof { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+    .pin-prof b { font-size: 15px; font-weight: 800; color: var(--slate-800); }
+    .th-prof { display: flex; align-items: center; gap: 8px; background: var(--blue-50); border: 1.5px solid var(--blue-100);
+      border-radius: 999px; padding: 5px 12px 5px 6px; font-size: 12.5px; font-weight: 700; color: var(--slate-700); }
+    .th-av { width: 26px; height: 26px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 12px; }
+    .th-av.c0 { background: linear-gradient(135deg, #4f7cff, #6d5cff); }
+    .th-av.c1 { background: linear-gradient(135deg, #8b5cf6, #d946ef); }
+    .th-av.c2 { background: linear-gradient(135deg, #0ea5e9, #22d3ee); }
+    .th-av.c3 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .th-av.c4 { background: linear-gradient(135deg, #10b981, #14b8a6); }
+    .th-av.c5 { background: linear-gradient(135deg, #ec4899, #f43f5e); }
+    .start-msg { background: #fef2f2; border: 1.5px solid #fecaca; color: #b91c1c; font-size: 13px; font-weight: 700;
+      border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; }
+    body.dark .start-msg { background: rgba(248, 113, 113, .1); border-color: rgba(248, 113, 113, .4); color: #fca5a5; }
+    body.dark .f-prof, body.dark .th-prof { background: rgba(59, 130, 246, .1); border-color: rgba(59, 130, 246, .3); }
+    body.dark .f-prof-info b, body.dark .pin-prof b { color: #f1f5f9; }
+    body.dark .th-prof { color: #cbd5e1; }
+
+    /* --- umumiy tugma --- */
+    .tbtn {
+      border: none; border-radius: var(--radius-md); padding: 12px 20px; font: 700 14.5px 'Manrope', sans-serif;
+      cursor: pointer; transition: all .18s ease;
+    }
+    .tbtn.primary { background: var(--blue-600); color: #fff; }
+    .tbtn.primary:hover { background: var(--blue-700); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(37, 99, 235, .3); }
+    .tbtn.ghost { background: var(--slate-100); color: var(--slate-700); border: 1.5px solid var(--slate-200); }
+    .tbtn.ghost:hover { border-color: var(--blue-500); color: var(--blue-700); }
+    .tbtn:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+
+    /* --- test ekrani --- */
+    .test-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--white); border: 1.5px solid var(--slate-200); border-radius: var(--radius-lg);
+      padding: 14px 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); flex-wrap: wrap;
+    }
+    .test-name { font-weight: 800; font-size: 16.5px; }
+    .test-timer { font-size: 14px; font-weight: 700; color: var(--slate-600); font-variant-numeric: tabular-nums; margin-top: 2px; }
+    .test-timer.urgent { color: #dc2626; animation: tstPulse 1s infinite; }
+    @keyframes tstPulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+    .test-exit { background: none; border: none; color: var(--slate-500); font: 700 13px 'Manrope', sans-serif; cursor: pointer; padding: 6px 10px; border-radius: 10px; }
+    .test-exit:hover { background: #fee2e2; color: #dc2626; }
+
+    .test-progress { height: 8px; border-radius: 999px; background: var(--slate-200); overflow: hidden; }
+    .test-progress-fill { height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--blue-500), var(--cyan-500)); transition: width .35s ease; }
+    .test-progress-text { font-size: 12.5px; font-weight: 700; color: var(--slate-500); margin: 8px 2px 12px; }
+
+    .nav-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .nav-dot {
+      width: 40px; height: 40px; border-radius: 12px; border: 1.5px solid var(--slate-200); background: var(--white);
+      font: 700 14px 'Manrope', sans-serif; color: var(--slate-500); cursor: pointer; transition: all .15s ease;
+    }
+    .nav-dot:hover { border-color: var(--blue-500); color: var(--blue-700); }
+    .nav-dot.done { background: var(--blue-50); border-color: var(--blue-500); color: var(--blue-700); }
+    .nav-dot.cur { background: var(--blue-600); border-color: var(--blue-600); color: #fff; transform: scale(1.08); box-shadow: 0 4px 12px rgba(37, 99, 235, .3); }
+
+    .q-card {
+      background: var(--white); border: 1.5px solid var(--slate-200); border-radius: var(--radius-lg);
+      padding: 26px 24px; box-shadow: var(--shadow-sm); max-width: 760px; margin: 0 auto;
+    }
+    .q-num { display: inline-block; background: var(--blue-50); color: var(--blue-700); font-size: 12.5px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
+    .q-text { font-size: clamp(17px, 2.6vw, 20px); font-weight: 700; line-height: 1.5; margin-bottom: 20px; }
+    .q-answers { display: flex; flex-direction: column; gap: 10px; }
+    .ans {
+      display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+      border: 1.5px solid var(--slate-200); background: var(--slate-100); border-radius: var(--radius-md);
+      padding: 13px 16px; font: 600 15.5px 'Manrope', sans-serif; color: var(--ink); cursor: pointer; transition: all .15s ease;
+    }
+    .ans:hover { border-color: var(--blue-500); background: var(--blue-50); }
+    .ans.sel { border-color: var(--blue-600); background: var(--blue-50); box-shadow: 0 0 0 3px rgba(37, 99, 235, .18); }
+    .ans-letter {
+      flex: 0 0 auto; width: 34px; height: 34px; border-radius: 10px; background: var(--white);
+      border: 1.5px solid var(--slate-200); display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px; color: var(--slate-600);
+    }
+    .ans.sel .ans-letter { background: var(--blue-600); border-color: var(--blue-600); color: #fff; }
+
+    .test-nav { display: flex; justify-content: space-between; gap: 10px; max-width: 760px; margin: 16px auto 0; }
+
+    /* --- natija ekrani --- */
+    .res-hero { text-align: center; margin-bottom: 22px; }
+    .score-circle { position: relative; width: 150px; height: 150px; margin: 0 auto 16px; }
+    .score-circle svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .sc-bg { fill: none; stroke: var(--slate-200); stroke-width: 10; }
+    .sc-fg { fill: none; stroke: var(--blue-500); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.1s cubic-bezier(.3, .8, .3, 1); }
+    .sc-pct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; letter-spacing: -.02em; }
+    .res-msg { font-size: 16.5px; font-weight: 700; display: inline-block; padding: 10px 20px; border-radius: 999px; }
+    .res-msg.excellent { background: var(--green-100); color: var(--green-600); }
+    .res-msg.good { background: var(--blue-50); color: var(--blue-700); }
+    .res-msg.average { background: var(--amber-100); color: #b45309; }
+    .res-msg.poor { background: #fee2e2; color: #dc2626; }
+
+    .res-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 760px; margin: 0 auto 20px; }
+    .res-stat {
+      background: var(--white); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md);
+      padding: 14px 12px; text-align: center; box-shadow: var(--shadow-sm);
+    }
+    .res-stat span { display: block; font-size: 12px; font-weight: 700; color: var(--slate-500); margin-bottom: 4px; }
+    .res-stat b { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+    .res-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 26px; }
+
+    .review-box, .hist-box { display: none; max-width: 760px; margin: 0 auto; }
+    .review-box.show, .hist-box.show { display: block; }
+    .review-title, .hist-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
+    .review-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+    .rv-item {
+      display: flex; gap: 12px; align-items: flex-start; background: var(--white);
+      border: 1.5px solid var(--slate-200); border-left-width: 5px; border-radius: var(--radius-md); padding: 13px 15px;
+    }
+    .rv-item.ok { border-left-color: var(--green-600); }
+    .rv-item.bad { border-left-color: #dc2626; }
+    .rv-item.skip { border-left-color: var(--amber-500); background: var(--amber-100); background: rgba(245, 158, 11, .08); }
+    .rv-num { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 9px; background: var(--slate-100); color: var(--slate-600); font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+    .rv-body { flex: 1; min-width: 0; }
+    .rv-q { font-weight: 700; font-size: 14.5px; margin-bottom: 4px; }
+    .rv-your { font-size: 13px; color: var(--slate-600); }
+    .rv-your b { color: var(--ink); }
+    .rv-correct { font-size: 13px; color: var(--green-600); font-weight: 600; margin-top: 2px; }
+    .rv-mark { font-size: 18px; flex: 0 0 auto; }
+
+    .hist-list { display: flex; flex-direction: column; gap: 8px; }
+    .hist-item {
+      display: flex; align-items: center; gap: 10px; background: var(--white);
+      border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 11px 15px; font-size: 13.5px;
+    }
+    .hist-item.latest { border-color: var(--blue-500); background: var(--blue-50); }
+    .hist-fan { font-weight: 700; flex: 1; min-width: 0; }
+    .hist-date { color: var(--slate-500); font-size: 12px; font-weight: 600; }
+    .hist-pct { font-weight: 800; color: var(--blue-700); font-variant-numeric: tabular-nums; }
+    .rt-gain { max-width: 760px; margin: 12px auto 0; background: var(--blue-50); border: 1.5px solid var(--blue-200); color: var(--slate-700);
+      border-radius: 14px; padding: 11px 16px; font: 600 13px 'Manrope', sans-serif; text-align: center; }
+
+    /* --- tungi rejim --- */
+    body.dark .cls-pill { background: #0b1220; border-color: #223049; color: #cbd5e1; }
+    body.dark .cls-pill:hover { border-color: var(--blue-500); color: #bfdbfe; }
+    body.dark .subj-card { background: #0f1a2e; border-color: #223049; box-shadow: none; }
+    body.dark .subj-card:hover:not(:disabled) { border-color: var(--blue-500); }
+    body.dark .subj-name { color: #f1f5f9; }
+    body.dark .form-card, body.dark .test-head, body.dark .q-card, body.dark .res-stat { background: #0f1a2e; border-color: #223049; }
+    body.dark .form-row input { background: #0b1220; border-color: #223049; color: #f1f5f9; }
+    body.dark .form-row input:focus { background: #0b1220; }
+    body.dark .tbtn.ghost { background: #101c33; border-color: #223049; color: #cbd5e1; }
+    body.dark .test-timer { color: #94a3b8; }
+    body.dark .test-progress { background: #1e293b; }
+    body.dark .nav-dot { background: #0f1a2e; border-color: #223049; color: #94a3b8; }
+    body.dark .nav-dot.done { background: #12233f; border-color: var(--blue-500); color: #bfdbfe; }
+    body.dark .q-num { background: #12233f; color: #93c5fd; }
+    body.dark .q-text, body.dark .rv-q { color: #f1f5f9; }
+    body.dark .ans { background: #0b1220; border-color: #223049; color: #e2e8f0; }
+    body.dark .ans-letter { background: #101c33; border-color: #223049; color: #cbd5e1; }
+    body.dark .sc-bg { stroke: #1e293b; }
+    body.dark .res-msg.excellent { background: rgba(5, 150, 105, .15); color: #34d399; }
+    body.dark .res-msg.average { background: rgba(245, 158, 11, .14); color: #fbbf24; }
+    body.dark .res-msg.poor { background: rgba(220, 38, 38, .14); color: #f87171; }
+    body.dark .res-stat span { color: #94a3b8; }
+    body.dark .rv-item { background: #0f1a2e; border-color: #223049; }
+    body.dark .rv-num { background: #101c33; color: #cbd5e1; }
+    body.dark .rv-your { color: #94a3b8; }
+    body.dark .rv-your b { color: #f1f5f9; }
+    body.dark .rv-correct { color: #34d399; }
+    body.dark .hist-item { background: #0f1a2e; border-color: #223049; }
+    body.dark .hist-item.latest { background: #12233f; }
+    body.dark .test-exit:hover { background: rgba(220, 38, 38, .15); }
+
+    @media (max-width: 560px) {
+      .tst-section { padding: 34px 0 56px; }
+      .q-card { padding: 20px 16px; }
+      .nav-dot { width: 36px; height: 36px; border-radius: 10px; }
+      .res-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .res-stat b { font-size: 17px; }
+      .form-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>✨ 2026/2027-o'quv yili boshlandi</span>
+      <span class="loc">📍 Farg'ona viloyati, Bag'dod tumani</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img src="../images/logo.png" alt="41-Maktab logotipi">
+        <div class="brand-text">
+          <span class="brand-name">41-Maktab <span class="beta-chip">BETA</span></span>
+          <span class="brand-tag">Bilim — kelajak kaliti</span>
+        </div>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li class="nav-dropdown">
+            <a href="index.html" class="nav-drop-btn">Asosiy
+              <svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </a>
+            <div class="nav-dropdown-menu">
+              <a href="index.html"><span class="dd-ico">🏠</span>Asosiy</a>
+              <a href="testlar.html"><span class="dd-ico">🎯</span>Testlar</a>
+              <a href="reyting.html"><span class="dd-ico">🏆</span>Reyting</a>
+              <a href="yangiliklar.html"><span class="dd-ico">📰</span>Yangiliklar</a>
+              <a href="ai.html"><span class="dd-ico">🤖</span>Jalolmirzo AI</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="nav-toggle" id="navToggle" aria-label="Menyu">
+          <span></span><span></span><span></span>
+        </button>
+        <button class="icon-btn" id="darkToggle" aria-label="Tungi rejim">🌙</button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="navBackdrop"></div>
+
+  <!-- SAHIFA HERO -->
+  <section class="page-hero">
+    <div class="hero-blobs" aria-hidden="true"></div>
+    <div class="container">
+      <span class="eyebrow">📝 Online testlar</span>
+      <h1>Bilimingizni sinab ko'ring</h1>
+      <p>Sinfingiz va fanningizni tanlang — natija va batafsil tahlil darhol chiqadi.</p>
+    </div>
+  </section>
+
+  <!-- TEST TIZIMI -->
+  <section class="section tst-section">
+    <div class="container">
+
+      <!-- EKRAN: TANLASH -->
+      <div class="tst-screen active" id="sSelect">
+        <div class="tst-head">
+          <h2>🎯 Testlarni tanlang</h2>
+          <p>Sinfingiz va faningizni tanlab, bilimingizni sinab ko'ring</p>
+        </div>
+        <div class="cls-block">
+          <div class="cls-label"><span>📚</span> Sinfingizni tanlang</div>
+          <div class="cls-pills" id="classPills"></div>
+        </div>
+        <div class="start-msg" id="startMsg" style="display:none"></div>
+        <div class="subj-grid" id="subjectGrid"></div>
+      </div>
+
+      <!-- EKRAN: KIRISH (standart: sessiya yo'q faqat) -->
+      <div class="tst-screen" id="sAuth">
+        <form class="form-card" id="startForm" novalidate>
+          <span class="form-icon" id="formIcon">👤</span>
+          <h3 id="formTitle">Kirish</h3>
+          <p class="form-sub" id="formSub"></p>
+          <!-- Profil (sessiya yoki qurilmada bog'langan): avatar + ism -->
+          <div class="f-prof" id="fProf" style="display:none">
+            <span class="f-prof-av" id="fProfAv">B</span>
+            <div class="f-prof-info">
+              <b id="fProfName">Ism Familiya</b>
+              <i id="fProfMeta">9-A sinf</i>
+            </div>
+          </div>
+          <div class="form-row" id="fPinRow">
+            <label for="fPin">Shaxsiy PIN kodingiz (4 raqam)</label>
+            <input type="password" id="fPin" inputmode="numeric" pattern="\d{4}" maxlength="4" placeholder="••••" autocomplete="off">
+          </div>
+          <div class="form-hint" id="fPinHintBound" style="display:none">PIN unutdingizmi? O'qituvchi qayta belgilaydi.</div>
+          <div class="form-err" id="formErr"></div>
+          <div class="form-actions">
+            <button type="button" class="tbtn ghost" id="formBackBtn">← Orqaga</button>
+            <button type="submit" class="tbtn primary" id="formGoBtn">🚀 Testni boshlash</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- EKRAN: TEST -->
+      <div class="tst-screen" id="sTest">
+        <div class="test-head">
+          <div>
+            <div class="test-name" id="tTitle"></div>
+            <div class="test-timer" id="tTimer">⏱️ 0:00</div>
+          </div>
+          <button class="test-exit" id="exitBtn" type="button">✕ Chiqish</button>
+        </div>
+        <div class="test-progress"><div class="test-progress-fill" id="tProgress"></div></div>
+        <div class="test-progress-text" id="tProgressText"></div>
+        <div class="nav-grid" id="navGrid"></div>
+        <div class="q-card">
+          <div class="q-num" id="qNum"></div>
+          <div class="q-text" id="qText"></div>
+          <div class="q-answers" id="qAnswers"></div>
+        </div>
+        <div class="test-nav">
+          <button class="tbtn ghost" id="prevBtn" type="button">← Oldingi</button>
+          <button class="tbtn primary" id="nextBtn" type="button">Keyingi →</button>
+          <button class="tbtn primary" id="finishBtn" type="button" style="display:none">✅ Tugatish</button>
+        </div>
+      </div>
+
+      <!-- EKRAN: NATIJA -->
+      <div class="tst-screen" id="sResults">
+        <div class="res-hero">
+          <div class="score-circle">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="sc-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="sc-fg" id="resCircle" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="sc-pct" id="resPct">0%</div>
+          </div>
+          <div><span class="res-msg" id="resMsg"></span></div>
+        </div>
+        <div class="res-stats">
+          <div class="res-stat"><span>To'g'ri javob</span><b><span id="resCorrect">0</span>/<span id="resTotal">0</span></b></div>
+          <div class="res-stat"><span>Vaqt</span><b id="resTime">0:00</b></div>
+          <div class="res-stat"><span>Ball</span><b id="resPoints">0</b></div>
+        </div>
+        <div class="rt-gain" id="rtGainLine" style="display:none"></div>
+        <div class="res-actions">
+          <button class="tbtn primary" id="retryBtn" type="button">🔁 Qayta topshirish</button>
+          <button class="tbtn ghost" id="reviewBtn" type="button">📋 Batafsil tahlil</button>
+          <button class="tbtn ghost" id="selectBtn" type="button">⬅️ Boshqa test</button>
+        </div>
+        <div class="review-box" id="reviewBox">
+          <div class="review-title">📋 Batafsil tahlil</div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+        <div class="hist-box" id="histBox">
+          <div class="hist-title">📊 So'nggi natijalar</div>
+          <div class="hist-list" id="histList"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="f-brand">
+            <img src="../images/logo.png" alt="41-Maktab">
+            <b>41-Maktab <span class="beta-chip">BETA</span></b>
+          </div>
+          <p class="footer-about">
+            Zamonaviy ta'lim, innovatsion yondashuv va yorqin kelajak sari.
+            2026/2027-o'quv yilida maktabimiz yangi avlod veb-saytiga o'tmoqda.
+          </p>
+        </div>
+        <div>
+          <h4>Tezkor havolalar</h4>
+          <div class="footer-links">
+            <a href="index.html">Bosh sahifa</a>
+            <a href="index.html#bolimlar">Bo'limlar</a>
+            <a href="index.html#jadval">Dars jadvali</a>
+            <a href="yangiliklar.html">Yangiliklar</a>
+            <a href="testlar.html">Testlar</a>
+            <a href="ai.html">Jalolmirzo AI</a>
+            <a href="info.html">Beta haqida</a>
+          </div>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul class="footer-contact">
+            <li>📍 <span>Bag'dod tumani, Farg'ona viloyati</span></li>
+            <li>📞 <a href="tel:+998901234567">+998 90 123 45 67</a></li>
+            <li>📧 <a href="mailto:info@41maktab.uz">info@41maktab.uz</a></li>
+            <li>💬 <a href="https://t.me/maktabJalolmirzo_bot" target="_blank" rel="noopener noreferrer">@41maktab_bot</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>O'quv yili</h4>
+          <ul class="f-meta">
+            <li><span>Yil</span><span>2026/2027</span></li>
+            <li><span>Ish kunlari</span><span>Dushanba – Shanba</span></li>
+            <li><span>Boshlanish</span><span>08:00</span></li>
+            <li><span>Katta tanaffus</span><span>11:15 – 11:35</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 41-Maktab. Barcha huquqlar himoyalangan.</span>
+        <span><a href="../index.html">Asosiy versiyaga qaytish</a> · <a href="info.html">Beta haqida</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/beta.js"></script>
+  <script src="js/testgen.js"></script>
+  <script src="js/reyting.js"></script>
+  <script id="test-engine">
+  (function () {
+    'use strict';
+
+    /* ===== TEST MA'LUMOTLARI (asosiy saytdan so'zsiz nusxa) ===== */
+    const testData = {
+  // ========== 5-SINF TESTLARI ==========
+  '5': {
+    'matematika': {
+      title: '🔢 Matematika (5-sinf)',
+      icon: '🔢',
+      time: 20,
+      questions: [
+        { question: '5 + 3 = ?', answers: ['6', '7', '8', '9'], correct: 2 },
+        { question: '10 - 4 = ?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: '3 × 4 = ?', answers: ['10', '11', '12', '13'], correct: 2 },
+        { question: '15 ÷ 3 = ?', answers: ['3', '4', '5', '6'], correct: 2 },
+        { question: 'Qaysi son eng katta?', answers: ['12', '15', '9', '7'], correct: 1 },
+        { question: '20 + 15 = ?', answers: ['30', '35', '40', '45'], correct: 1 },
+        { question: '100 - 45 = ?', answers: ['55', '65', '45', '35'], correct: 0 },
+        { question: '8 × 6 = ?', answers: ['42', '48', '54', '56'], correct: 1 },
+        { question: '36 ÷ 6 = ?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Qaysi son 50 dan kichik?', answers: ['55', '60', '45', '52'], correct: 2 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (5-sinf)',
+      icon: '📖',
+      time: 20,
+      questions: [
+        { question: 'Alifboda nechta harf bor?', answers: ['28', '29', '30', '31'], correct: 1 },
+        { question: '"Kitob" so\'zida nechta harf?', answers: ['4', '5', '6', '7'], correct: 1 },
+        { question: 'Unli harflar nechta?', answers: ['5', '6', '7', '8'], correct: 1 },
+        { question: '"Olma" so\'zining birinchi harfi?', answers: ['A', 'O', 'L', 'M'], correct: 1 },
+        { question: 'Gap qanday yoziladi?', answers: ['kichik', 'katta', 'qalin', 'yog\'on'], correct: 1 },
+        { question: 'Nuqta qayerda qo\'yiladi?', answers: ['gap boshida', 'gap oxirida', 'o\'rtasida', 'hech qayerda'], correct: 1 },
+        { question: '"Maktab" so\'zining ma\'nosi?', answers: ['uy', 'o\'qish joyi', 'do\'kon', 'bog\''], correct: 1 },
+        { question: 'So\'roq gap oxiriga qanday belgi qo\'yiladi?', answers: ['!', '?', '.', ','], correct: 1 },
+        { question: '"Salom" so\'zi qanday ma\'noda?', answers: ['xayrlashish', 'salomlashish', 'rahmat', 'kechirasiz'], correct: 1 },
+        { question: 'O\'zbek tilida nechta undosh harf?', answers: ['20', '21', '22', '23'], correct: 2 }
+      ]
+    },
+    'ingliz-tili': {
+      title: '🌍 Ingliz tili (5-sinf)',
+      icon: '🌍',
+      time: 20,
+      questions: [
+        { question: '"Hello" meaning?', answers: ['Xayr', 'Salom', 'Rahmat', 'Kechirasiz'], correct: 1 },
+        { question: '"Cat" is?', answers: ['It', 'Mushuk', 'Sigir', 'Ot'], correct: 1 },
+        { question: 'What is "1" in English?', answers: ['One', 'Two', 'Three', 'Four'], correct: 0 },
+        { question: '"Red" color?', answers: ['Ko\'k', 'Yashil', 'Qizil', 'Sariq'], correct: 2 },
+        { question: '"Mother" meaning?', answers: ['Ota', 'Ona', 'Bola', 'Aka'], correct: 1 },
+        { question: '"School" is?', answers: ['Maktab', 'Bog\'cha', 'Universitet', 'Kollej'], correct: 0 },
+        { question: 'How are you?', answers: ['Salom', 'Rahmat', 'Yaxshimisiz', 'Xayr'], correct: 2 },
+        { question: '"Book" is?', answers: ['Qalam', 'Kitob', 'Daftar', 'Ruchka'], correct: 1 },
+        { question: '"Good" meaning?', answers: ['Yomon', 'Yaxshi', 'Katta', 'Kichik'], correct: 1 },
+        { question: '"Apple" is?', answers: ['Banan', 'Olma', 'Nok', 'Uzum'], correct: 1 }
+      ]
+    }
+  },
+  
+  // ========== 6-A SINF TESTLARI ==========
+  '6a': {
+    'matematika': {
+      title: '🔢 Matematika (6-sinf)',
+      icon: '🔢',
+      time: 25,
+      questions: [
+        { question: '45 + 37 = ?', answers: ['72', '82', '92', '102'], correct: 1 },
+        { question: '120 - 45 = ?', answers: ['65', '75', '85', '95'], correct: 1 },
+        { question: '14 × 6 = ?', answers: ['74', '84', '94', '104'], correct: 1 },
+        { question: '144 ÷ 12 = ?', answers: ['10', '11', '12', '13'], correct: 2 },
+        { question: '3² = ?', answers: ['6', '8', '9', '12'], correct: 2 },
+        { question: '√64 = ?', answers: ['6', '7', '8', '9'], correct: 2 },
+        { question: 'Kasr 1/2 + 1/4 = ?', answers: ['1/4', '1/2', '3/4', '1'], correct: 2 },
+        { question: '25% of 200 = ?', answers: ['25', '50', '75', '100'], correct: 1 },
+        { question: '7 × 8 = ?', answers: ['48', '54', '56', '64'], correct: 2 },
+        { question: '81 ÷ 9 = ?', answers: ['7', '8', '9', '10'], correct: 2 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (6-sinf)',
+      icon: '📖',
+      time: 25,
+      questions: [
+        { question: 'Ot so\'z turkumi nimani bildiradi?', answers: ['Harakat', 'Narsa', 'Belgi', 'Sifat'], correct: 1 },
+        { question: 'Fe\'l qanday savolga javob beradi?', answers: ['Kim?', 'Nima?', 'Nima qildi?', 'Qanaqa?'], correct: 2 },
+        { question: 'Sifat qanday ma\'noni bildiradi?', answers: ['Narsa', 'Harakat', 'Belgi', 'Son'], correct: 2 },
+        { question: '"Yugurdi" qaysi turkum?', answers: ['Ot', 'Sifat', 'Fe\'l', 'Ravish'], correct: 2 },
+        { question: 'Gapning bosh bo\'laklari?', answers: ['ega, kesim', 'aniqlovchi', 'to\'ldiruvchi', 'hol'], correct: 0 },
+        { question: 'So\'roq olmoshlari?', answers: ['men', 'sen', 'kim?', 'biz'], correct: 2 },
+        { question: 'Ko\'plik qo\'shimchasi?', answers: ['-lar', '-ga', '-da', '-ni'], correct: 0 },
+        { question: '"Chiroyli" so\'zi qaysi turkum?', answers: ['Ot', 'Fe\'l', 'Sifat', 'Ravish'], correct: 2 },
+        { question: 'Kelishiklar nechta?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Bosh kelishik qaysi?', answers: ['Qaratqich', 'Tushum', 'Jo\'nalish', 'Bosh'], correct: 3 }
+      ]
+    },
+    'ingliz-tili': {
+      title: '🌍 Ingliz tili (6-sinf)',
+      icon: '🌍',
+      time: 25,
+      questions: [
+        { question: 'I ___ a student.', answers: ['am', 'is', 'are', 'be'], correct: 0 },
+        { question: 'She ___ to school every day.', answers: ['go', 'goes', 'going', 'went'], correct: 1 },
+        { question: 'They ___ playing football now.', answers: ['am', 'is', 'are', 'be'], correct: 2 },
+        { question: 'What is the past of "eat"?', answers: ['eated', 'ate', 'eaten', 'eating'], correct: 1 },
+        { question: '___ you like ice cream?', answers: ['Does', 'Do', 'Is', 'Are'], correct: 1 },
+        { question: 'My father ___ a doctor.', answers: ['am', 'is', 'are', 'be'], correct: 1 },
+        { question: 'We ___ to the park yesterday.', answers: ['go', 'goes', 'went', 'going'], correct: 2 },
+        { question: '___ is your name?', answers: ['What', 'Where', 'When', 'Who'], correct: 0 },
+        { question: 'I have ___ apple.', answers: ['a', 'an', 'the', 'no'], correct: 1 },
+        { question: 'She ___ English very well.', answers: ['speak', 'speaks', 'speaking', 'spoke'], correct: 1 }
+      ]
+    }
+  },
+  
+  // ========== 6-B SINF TESTLARI ==========
+  '6b': {
+    'matematika': {
+      title: '🔢 Matematika (6-sinf)',
+      icon: '🔢',
+      time: 25,
+      questions: [
+        { question: '45 + 37 = ?', answers: ['72', '82', '92', '102'], correct: 1 },
+        { question: '120 - 45 = ?', answers: ['65', '75', '85', '95'], correct: 1 },
+        { question: '14 × 6 = ?', answers: ['74', '84', '94', '104'], correct: 1 },
+        { question: '144 ÷ 12 = ?', answers: ['10', '11', '12', '13'], correct: 2 },
+        { question: '3² = ?', answers: ['6', '8', '9', '12'], correct: 2 },
+        { question: '√64 = ?', answers: ['6', '7', '8', '9'], correct: 2 },
+        { question: 'Kasr 1/2 + 1/4 = ?', answers: ['1/4', '1/2', '3/4', '1'], correct: 2 },
+        { question: '25% of 200 = ?', answers: ['25', '50', '75', '100'], correct: 1 },
+        { question: '7 × 8 = ?', answers: ['48', '54', '56', '64'], correct: 2 },
+        { question: '81 ÷ 9 = ?', answers: ['7', '8', '9', '10'], correct: 2 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (6-sinf)',
+      icon: '📖',
+      time: 25,
+      questions: [
+        { question: 'Ot so\'z turkumi nimani bildiradi?', answers: ['Harakat', 'Narsa', 'Belgi', 'Sifat'], correct: 1 },
+        { question: 'Fe\'l qanday savolga javob beradi?', answers: ['Kim?', 'Nima?', 'Nima qildi?', 'Qanaqa?'], correct: 2 },
+        { question: 'Sifat qanday ma\'noni bildiradi?', answers: ['Narsa', 'Harakat', 'Belgi', 'Son'], correct: 2 },
+        { question: '"Yugurdi" qaysi turkum?', answers: ['Ot', 'Sifat', 'Fe\'l', 'Ravish'], correct: 2 },
+        { question: 'Gapning bosh bo\'laklari?', answers: ['ega, kesim', 'aniqlovchi', 'to\'ldiruvchi', 'hol'], correct: 0 },
+        { question: 'So\'roq olmoshlari?', answers: ['men', 'sen', 'kim?', 'biz'], correct: 2 },
+        { question: 'Ko\'plik qo\'shimchasi?', answers: ['-lar', '-ga', '-da', '-ni'], correct: 0 },
+        { question: '"Chiroyli" so\'zi qaysi turkum?', answers: ['Ot', 'Fe\'l', 'Sifat', 'Ravish'], correct: 2 },
+        { question: 'Kelishiklar nechta?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Bosh kelishik qaysi?', answers: ['Qaratqich', 'Tushum', 'Jo\'nalish', 'Bosh'], correct: 3 }
+      ]
+    },
+    'ingliz-tili': {
+      title: '🌍 Ingliz tili (6-sinf)',
+      icon: '🌍',
+      time: 25,
+      questions: [
+        { question: 'I ___ a student.', answers: ['am', 'is', 'are', 'be'], correct: 0 },
+        { question: 'She ___ to school every day.', answers: ['go', 'goes', 'going', 'went'], correct: 1 },
+        { question: 'They ___ playing football now.', answers: ['am', 'is', 'are', 'be'], correct: 2 },
+        { question: 'What is the past of "eat"?', answers: ['eated', 'ate', 'eaten', 'eating'], correct: 1 },
+        { question: '___ you like ice cream?', answers: ['Does', 'Do', 'Is', 'Are'], correct: 1 },
+        { question: 'My father ___ a doctor.', answers: ['am', 'is', 'are', 'be'], correct: 1 },
+        { question: 'We ___ to the park yesterday.', answers: ['go', 'goes', 'went', 'going'], correct: 2 },
+        { question: '___ is your name?', answers: ['What', 'Where', 'When', 'Who'], correct: 0 },
+        { question: 'I have ___ apple.', answers: ['a', 'an', 'the', 'no'], correct: 1 },
+        { question: 'She ___ English very well.', answers: ['speak', 'speaks', 'speaking', 'spoke'], correct: 1 }
+      ]
+    }
+  },
+  
+  // ========== 7-A SINF TESTLARI ==========
+  '7a': {
+    'matematika': {
+      title: '🔢 Matematika (7-sinf)',
+      icon: '🔢',
+      time: 30,
+      questions: [
+        { question: '3x + 5 = 20, x = ?', answers: ['3', '4', '5', '6'], correct: 2 },
+        { question: '2(x + 3) = 14, x = ?', answers: ['2', '3', '4', '5'], correct: 2 },
+        { question: 'x² = 49, x = ?', answers: ['±5', '±6', '±7', '±8'], correct: 2 },
+        { question: '√121 = ?', answers: ['9', '10', '11', '12'], correct: 2 },
+        { question: '125 ni 5 ga bo\'lganda?', answers: ['15', '20', '25', '30'], correct: 2 },
+        { question: '-5 + 8 = ?', answers: ['-3', '3', '13', '-13'], correct: 1 },
+        { question: '7 - (-3) = ?', answers: ['4', '10', '-4', '-10'], correct: 1 },
+        { question: '(-6) × (-4) = ?', answers: ['-24', '24', '-10', '10'], correct: 1 },
+        { question: '12 ÷ (-3) = ?', answers: ['4', '-4', '36', '-36'], correct: 1 },
+        { question: '3² + 4² = ?', answers: ['5²', '6²', '7²', '8²'], correct: 0 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (7-sinf)',
+      icon: '⚛️',
+      time: 30,
+      questions: [
+        { question: 'Mexanik harakat nima?', answers: ['Jismning o\'zgarishi', 'Jismning vaqt o\'tishi bilan vaziyatining o\'zgarishi', 'Jismning shakli o\'zgarishi', 'Jismning rangi o\'zgarishi'], correct: 1 },
+        { question: 'Tezlik formulasi?', answers: ['v = s/t', 'v = t/s', 'v = s × t', 'v = s + t'], correct: 0 },
+        { question: 'Inersiya nima?', answers: ['Jismning tinch holatini saqlashi', 'Jismning tezligini o\'zgartirishi', 'Jismning shakli o\'zgarishi', 'Jismning erishi'], correct: 0 },
+        { question: 'Kuch birligi?', answers: ['Joul', 'Vatt', 'Nyuton', 'Paskal'], correct: 2 },
+        { question: 'Og\'irlik kuchi formulasi?', answers: ['F = ma', 'F = mg', 'F = mv', 'F = m/t'], correct: 1 },
+        { question: 'Ishqalanish kuchi...', answers: ['harakatni tezlashtiradi', 'harakatni sekinlashtiradi', 'harakatga ta\'sir qilmaydi', 'harakatni to\'xtatadi'], correct: 1 },
+        { question: 'Bosim formulasi?', answers: ['P = F/S', 'P = S/F', 'P = F × S', 'P = F + S'], correct: 0 },
+        { question: 'Suyuqlik bosimi...', answers: ['faqat pastga', 'faqat yuqoriga', 'hamma tomonga', 'yon tomonga'], correct: 2 },
+        { question: 'Arximed kuchi...', answers: ['yuqoriga', 'pastga', 'yon tomonga', 'aylana bo\'ylab'], correct: 0 },
+        { question: 'Energiya birligi?', answers: ['Nyuton', 'Vatt', 'Joul', 'Paskal'], correct: 2 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (7-sinf)',
+      icon: '📖',
+      time: 25,
+      questions: [
+        { question: 'Gapning ikkinchi darajali bo\'laklari?', answers: ['ega, kesim', 'aniqlovchi, to\'ldiruvchi, hol', 'ot, sifat', 'fe\'l, ravish'], correct: 1 },
+        { question: 'Aniqlovchi qanday savolga javob beradi?', answers: ['Kim?', 'Nima?', 'Qanaqa?', 'Qayerda?'], correct: 2 },
+        { question: 'To\'ldiruvchi qanday savolga javob beradi?', answers: ['Kimni?', 'Qanaqa?', 'Qayerda?', 'Qachon?'], correct: 0 },
+        { question: 'Hol qanday savolga javob beradi?', answers: ['Kim?', 'Nima?', 'Qanaqa?', 'Qayerda?'], correct: 3 },
+        { question: 'Sodda gap necha bo\'lakdan iborat?', answers: ['1', '2', '3', '4'], correct: 1 },
+        { question: 'Qo\'shma gap necha sodda gapdan tashkil topadi?', answers: ['1', '2 yoki undan ko\'p', '3', '4'], correct: 1 },
+        { question: 'Bog\'lovchisiz qo\'shma gap...', answers: ['bog\'lovchi bilan', 'bog\'lovchisiz', 'yordamchi so\'z bilan', 'ko\'makchi bilan'], correct: 1 },
+        { question: 'Uyushiq bo\'laklar...', answers: ['bir-biriga bog\'liq', 'bir-biriga bog\'liq emas', 'bir xil savolga javob beradi', 'turli savolga javob beradi'], correct: 2 },
+        { question: 'Kirish so\'zlar...', answers: ['gap bo\'lagi', 'gap bo\'lagi emas', 'ega', 'kesim'], correct: 1 },
+        { question: 'Undalma...', answers: ['kimga murojaat', 'narsaga murojaat', 'harakatga murojaat', 'belgiga murojaat'], correct: 0 }
+      ]
+    }
+  },
+  
+  // ========== 7-B SINF TESTLARI ==========
+  '7b': {
+    'matematika': {
+      title: '🔢 Matematika (7-sinf)',
+      icon: '🔢',
+      time: 30,
+      questions: [
+        { question: '3x + 5 = 20, x = ?', answers: ['3', '4', '5', '6'], correct: 2 },
+        { question: '2(x + 3) = 14, x = ?', answers: ['2', '3', '4', '5'], correct: 2 },
+        { question: 'x² = 49, x = ?', answers: ['±5', '±6', '±7', '±8'], correct: 2 },
+        { question: '√121 = ?', answers: ['9', '10', '11', '12'], correct: 2 },
+        { question: '125 ni 5 ga bo\'lganda?', answers: ['15', '20', '25', '30'], correct: 2 },
+        { question: '-5 + 8 = ?', answers: ['-3', '3', '13', '-13'], correct: 1 },
+        { question: '7 - (-3) = ?', answers: ['4', '10', '-4', '-10'], correct: 1 },
+        { question: '(-6) × (-4) = ?', answers: ['-24', '24', '-10', '10'], correct: 1 },
+        { question: '12 ÷ (-3) = ?', answers: ['4', '-4', '36', '-36'], correct: 1 },
+        { question: '3² + 4² = ?', answers: ['5²', '6²', '7²', '8²'], correct: 0 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (7-sinf)',
+      icon: '⚛️',
+      time: 30,
+      questions: [
+        { question: 'Mexanik harakat nima?', answers: ['Jismning o\'zgarishi', 'Jismning vaqt o\'tishi bilan vaziyatining o\'zgarishi', 'Jismning shakli o\'zgarishi', 'Jismning rangi o\'zgarishi'], correct: 1 },
+        { question: 'Tezlik formulasi?', answers: ['v = s/t', 'v = t/s', 'v = s × t', 'v = s + t'], correct: 0 },
+        { question: 'Inersiya nima?', answers: ['Jismning tinch holatini saqlashi', 'Jismning tezligini o\'zgartirishi', 'Jismning shakli o\'zgarishi', 'Jismning erishi'], correct: 0 },
+        { question: 'Kuch birligi?', answers: ['Joul', 'Vatt', 'Nyuton', 'Paskal'], correct: 2 },
+        { question: 'Og\'irlik kuchi formulasi?', answers: ['F = ma', 'F = mg', 'F = mv', 'F = m/t'], correct: 1 },
+        { question: 'Ishqalanish kuchi...', answers: ['harakatni tezlashtiradi', 'harakatni sekinlashtiradi', 'harakatga ta\'sir qilmaydi', 'harakatni to\'xtatadi'], correct: 1 },
+        { question: 'Bosim formulasi?', answers: ['P = F/S', 'P = S/F', 'P = F × S', 'P = F + S'], correct: 0 },
+        { question: 'Suyuqlik bosimi...', answers: ['faqat pastga', 'faqat yuqoriga', 'hamma tomonga', 'yon tomonga'], correct: 2 },
+        { question: 'Arximed kuchi...', answers: ['yuqoriga', 'pastga', 'yon tomonga', 'aylana bo\'ylab'], correct: 0 },
+        { question: 'Energiya birligi?', answers: ['Nyuton', 'Vatt', 'Joul', 'Paskal'], correct: 2 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (7-sinf)',
+      icon: '📖',
+      time: 25,
+      questions: [
+        { question: 'Gapning ikkinchi darajali bo\'laklari?', answers: ['ega, kesim', 'aniqlovchi, to\'ldiruvchi, hol', 'ot, sifat', 'fe\'l, ravish'], correct: 1 },
+        { question: 'Aniqlovchi qanday savolga javob beradi?', answers: ['Kim?', 'Nima?', 'Qanaqa?', 'Qayerda?'], correct: 2 },
+        { question: 'To\'ldiruvchi qanday savolga javob beradi?', answers: ['Kimni?', 'Qanaqa?', 'Qayerda?', 'Qachon?'], correct: 0 },
+        { question: 'Hol qanday savolga javob beradi?', answers: ['Kim?', 'Nima?', 'Qanaqa?', 'Qayerda?'], correct: 3 },
+        { question: 'Sodda gap necha bo\'lakdan iborat?', answers: ['1', '2', '3', '4'], correct: 1 },
+        { question: 'Qo\'shma gap necha sodda gapdan tashkil topadi?', answers: ['1', '2 yoki undan ko\'p', '3', '4'], correct: 1 },
+        { question: 'Bog\'lovchisiz qo\'shma gap...', answers: ['bog\'lovchi bilan', 'bog\'lovchisiz', 'yordamchi so\'z bilan', 'ko\'makchi bilan'], correct: 1 },
+        { question: 'Uyushiq bo\'laklar...', answers: ['bir-biriga bog\'liq', 'bir-biriga bog\'liq emas', 'bir xil savolga javob beradi', 'turli savolga javob beradi'], correct: 2 },
+        { question: 'Kirish so\'zlar...', answers: ['gap bo\'lagi', 'gap bo\'lagi emas', 'ega', 'kesim'], correct: 1 },
+        { question: 'Undalma...', answers: ['kimga murojaat', 'narsaga murojaat', 'harakatga murojaat', 'belgiga murojaat'], correct: 0 }
+      ]
+    }
+  },
+  
+  // ========== 8-A SINF TESTLARI ==========
+  '8a': {
+    'matematika': {
+      title: '🔢 Matematika (8-sinf)',
+      icon: '🔢',
+      time: 35,
+      questions: [
+        { question: 'x² - 9 = 0 tenglamani yeching', answers: ['±2', '±3', '±4', '±5'], correct: 1 },
+        { question: 'x² - 5x + 6 = 0 ildizlari?', answers: ['2 va 3', '1 va 6', '2 va 4', '3 va 4'], correct: 0 },
+        { question: 'Kvadrat tenglama diskriminanti?', answers: ['D = b² - 4ac', 'D = b² + 4ac', 'D = 4ac - b²', 'D = b - 4ac'], correct: 0 },
+        { question: 'Parabola uchi formulasi?', answers: ['x = -b/2a', 'x = b/2a', 'x = -b/a', 'x = b/a'], correct: 0 },
+        { question: 'Funksiya nima?', answers: ['x va y orasidagi bog\'liqlik', 'sonlar', 'tenglamalar', 'tengsizliklar'], correct: 0 },
+        { question: 'To\'g\'ri proporsionallik formulasi?', answers: ['y = kx', 'y = k/x', 'y = kx + b', 'y = x²'], correct: 0 },
+        { question: 'Teskari proporsionallik?', answers: ['y = kx', 'y = k/x', 'y = kx + b', 'y = x²'], correct: 1 },
+        { question: 'Chiziqli funksiya?', answers: ['y = kx + b', 'y = x²', 'y = k/x', 'y = |x|'], correct: 0 },
+        { question: 'Arifmetik progressiya formulası?', answers: ['a_n = a₁ + (n-1)d', 'a_n = a₁ × qⁿ⁻¹', 'a_n = a₁ + d', 'a_n = a₁ × n'], correct: 0 },
+        { question: 'Geometrik progressiya?', answers: ['a_n = a₁ + (n-1)d', 'a_n = a₁ × qⁿ⁻¹', 'a_n = a₁ + d', 'a_n = a₁ × n'], correct: 1 }
+      ]
+    },
+    'kimyo': {
+      title: '🧪 Kimyo (8-sinf)',
+      icon: '🧪',
+      time: 30,
+      questions: [
+        { question: 'Kislorodning valentligi?', answers: ['I', 'II', 'III', 'IV'], correct: 1 },
+        { question: 'Vodorodning valentligi?', answers: ['I', 'II', 'III', 'IV'], correct: 0 },
+        { question: 'Suv formulasi?', answers: ['H₂O', 'CO₂', 'O₂', 'N₂'], correct: 0 },
+        { question: 'Natriy xlorid formulasi?', answers: ['NaCl', 'KCl', 'CaCl₂', 'MgCl₂'], correct: 0 },
+        { question: 'Kislotalar ta\'mi?', answers: ['shirin', 'achchiq', 'nordon', 'tuzli'], correct: 2 },
+        { question: 'Ishqorlar ta\'mi?', answers: ['shirin', 'achchiq', 'nordon', 'tuzli'], correct: 0 },
+        { question: 'Lakmus kislotada qanday rang?', answers: ['ko\'k', 'qizil', 'sariq', 'yashil'], correct: 1 },
+        { question: 'Fenolftalein ishqorda?', answers: ['rangsiz', 'qizil', 'ko\'k', 'sariq'], correct: 1 },
+        { question: 'Metallar elektr tokini...', answers: ['o\'tkazadi', 'o\'tkazmaydi', 'yomon o\'tkazadi', 'faqat qizdirganda'], correct: 0 },
+        { question: 'Nometallar...', answers: ['o\'tkazadi', 'o\'tkazmaydi', 'yaxshi o\'tkazadi', 'faqat qizdirganda'], correct: 1 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (8-sinf)',
+      icon: '⚛️',
+      time: 30,
+      questions: [
+        { question: 'Elektr toki nima?', answers: ['Zaryadlangan zarrachalarning tartibli harakati', 'Elektronlarning xaotik harakati', 'Atomlarning tebranishi', 'Molekulalarning harakati'], correct: 0 },
+        { question: 'Tok kuchi qanday harf bilan belgilanadi?', answers: ['U', 'I', 'R', 'P'], correct: 1 },
+        { question: 'Kuchlanish formulasi?', answers: ['U = IR', 'I = U/R', 'R = U/I', 'P = UI'], correct: 0 },
+        { question: 'Qarshilik birligi?', answers: ['Amper', 'Volt', 'Om', 'Vatt'], correct: 2 },
+        { question: 'Om qonuni formulasi?', answers: ['I = U/R', 'U = IR', 'R = U/I', 'P = UI'], correct: 0 },
+        { question: 'O\'tkazgichlar ketma-ket ulanganda...', answers: ['I = const', 'U = const', 'R = const', 'P = const'], correct: 0 },
+        { question: 'O\'tkazgichlar parallel ulanganda...', answers: ['I = const', 'U = const', 'R = const', 'P = const'], correct: 1 },
+        { question: 'Quvvat formulasi?', answers: ['P = UI', 'A = UIt', 'I = U/R', 'U = IR'], correct: 0 },
+        { question: 'Ish formulasi?', answers: ['A = UIt', 'P = UI', 'I = U/R', 'U = IR'], correct: 0 },
+        { question: 'Joul-Lens qonuni?', answers: ['Q = I²Rt', 'I = U/R', 'P = UI', 'U = IR'], correct: 0 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (8-sinf)',
+      icon: '📖',
+      time: 25,
+      questions: [
+        { question: 'Qo\'shma gap necha xil bo\'ladi?', answers: ['2', '3', '4', '5'], correct: 0 },
+        { question: 'Bog\'lovchili qo\'shma gap turlari?', answers: ['2', '3', '4', '5'], correct: 1 },
+        { question: 'Bog\'lovchisiz qo\'shma gap...', answers: ['tobeli', 'ergashgan', 'uyushiq', 'sodda'], correct: 0 },
+        { question: 'Ergashgan gap...', answers: ['bosh gapga bog\'liq', 'mustaqil', 'sodda', 'qo\'shma'], correct: 0 },
+        { question: 'Tobelik...', answers: ['bog\'lanish turi', 'gap turi', 'so\'z turkumi', 'qo\'shimcha'], correct: 0 },
+        { question: 'Egalik qo\'shimchalari nechta?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Kelishik qo\'shimchalari nechta?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Qaratqich kelishigi qaysi?', answers: ['-ning', '-ni', '-ga', '-da'], correct: 0 },
+        { question: 'Tushum kelishigi qaysi?', answers: ['-ning', '-ni', '-ga', '-da'], correct: 1 },
+        { question: 'Jo\'nalish kelishigi qaysi?', answers: ['-ning', '-ni', '-ga', '-da'], correct: 2 }
+      ]
+    }
+  },
+  
+  // ========== 8-B SINF TESTLARI ==========
+  '8b': {
+    'matematika': {
+      title: '🔢 Matematika (8-sinf)',
+      icon: '🔢',
+      time: 35,
+      questions: [
+        { question: 'x² - 9 = 0 tenglamani yeching', answers: ['±2', '±3', '±4', '±5'], correct: 1 },
+        { question: 'x² - 5x + 6 = 0 ildizlari?', answers: ['2 va 3', '1 va 6', '2 va 4', '3 va 4'], correct: 0 },
+        { question: 'Kvadrat tenglama diskriminanti?', answers: ['D = b² - 4ac', 'D = b² + 4ac', 'D = 4ac - b²', 'D = b - 4ac'], correct: 0 },
+        { question: 'Parabola uchi formulasi?', answers: ['x = -b/2a', 'x = b/2a', 'x = -b/a', 'x = b/a'], correct: 0 },
+        { question: 'Funksiya nima?', answers: ['x va y orasidagi bog\'liqlik', 'sonlar', 'tenglamalar', 'tengsizliklar'], correct: 0 },
+        { question: 'To\'g\'ri proporsionallik formulasi?', answers: ['y = kx', 'y = k/x', 'y = kx + b', 'y = x²'], correct: 0 },
+        { question: 'Teskari proporsionallik?', answers: ['y = kx', 'y = k/x', 'y = kx + b', 'y = x²'], correct: 1 },
+        { question: 'Chiziqli funksiya?', answers: ['y = kx + b', 'y = x²', 'y = k/x', 'y = |x|'], correct: 0 },
+        { question: 'Arifmetik progressiya formulası?', answers: ['a_n = a₁ + (n-1)d', 'a_n = a₁ × qⁿ⁻¹', 'a_n = a₁ + d', 'a_n = a₁ × n'], correct: 0 },
+        { question: 'Geometrik progressiya?', answers: ['a_n = a₁ + (n-1)d', 'a_n = a₁ × qⁿ⁻¹', 'a_n = a₁ + d', 'a_n = a₁ × n'], correct: 1 }
+      ]
+    },
+    'kimyo': {
+      title: '🧪 Kimyo (8-sinf)',
+      icon: '🧪',
+      time: 30,
+      questions: [
+        { question: 'Kislorodning valentligi?', answers: ['I', 'II', 'III', 'IV'], correct: 1 },
+        { question: 'Vodorodning valentligi?', answers: ['I', 'II', 'III', 'IV'], correct: 0 },
+        { question: 'Suv formulasi?', answers: ['H₂O', 'CO₂', 'O₂', 'N₂'], correct: 0 },
+        { question: 'Natriy xlorid formulasi?', answers: ['NaCl', 'KCl', 'CaCl₂', 'MgCl₂'], correct: 0 },
+        { question: 'Kislotalar ta\'mi?', answers: ['shirin', 'achchiq', 'nordon', 'tuzli'], correct: 2 },
+        { question: 'Ishqorlar ta\'mi?', answers: ['shirin', 'achchiq', 'nordon', 'tuzli'], correct: 0 },
+        { question: 'Lakmus kislotada qanday rang?', answers: ['ko\'k', 'qizil', 'sariq', 'yashil'], correct: 1 },
+        { question: 'Fenolftalein ishqorda?', answers: ['rangsiz', 'qizil', 'ko\'k', 'sariq'], correct: 1 },
+        { question: 'Metallar elektr tokini...', answers: ['o\'tkazadi', 'o\'tkazmaydi', 'yomon o\'tkazadi', 'faqat qizdirganda'], correct: 0 },
+        { question: 'Nometallar...', answers: ['o\'tkazadi', 'o\'tkazmaydi', 'yaxshi o\'tkazadi', 'faqat qizdirganda'], correct: 1 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (8-sinf)',
+      icon: '⚛️',
+      time: 30,
+      questions: [
+        { question: 'Elektr toki nima?', answers: ['Zaryadlangan zarrachalarning tartibli harakati', 'Elektronlarning xaotik harakati', 'Atomlarning tebranishi', 'Molekulalarning harakati'], correct: 0 },
+        { question: 'Tok kuchi qanday harf bilan belgilanadi?', answers: ['U', 'I', 'R', 'P'], correct: 1 },
+        { question: 'Kuchlanish formulasi?', answers: ['U = IR', 'I = U/R', 'R = U/I', 'P = UI'], correct: 0 },
+        { question: 'Qarshilik birligi?', answers: ['Amper', 'Volt', 'Om', 'Vatt'], correct: 2 },
+        { question: 'Om qonuni formulasi?', answers: ['I = U/R', 'U = IR', 'R = U/I', 'P = UI'], correct: 0 },
+        { question: 'O\'tkazgichlar ketma-ket ulanganda...', answers: ['I = const', 'U = const', 'R = const', 'P = const'], correct: 0 },
+        { question: 'O\'tkazgichlar parallel ulanganda...', answers: ['I = const', 'U = const', 'R = const', 'P = const'], correct: 1 },
+        { question: 'Quvvat formulasi?', answers: ['P = UI', 'A = UIt', 'I = U/R', 'U = IR'], correct: 0 },
+        { question: 'Ish formulasi?', answers: ['A = UIt', 'P = UI', 'I = U/R', 'U = IR'], correct: 0 },
+        { question: 'Joul-Lens qonuni?', answers: ['Q = I²Rt', 'I = U/R', 'P = UI', 'U = IR'], correct: 0 }
+      ]
+    },
+    'ona-tili': {
+      title: '📖 Ona tili (8-sinf)',
+      icon: '📖',
+      time: 25,
+      questions: [
+        { question: 'Qo\'shma gap necha xil bo\'ladi?', answers: ['2', '3', '4', '5'], correct: 0 },
+        { question: 'Bog\'lovchili qo\'shma gap turlari?', answers: ['2', '3', '4', '5'], correct: 1 },
+        { question: 'Bog\'lovchisiz qo\'shma gap...', answers: ['tobeli', 'ergashgan', 'uyushiq', 'sodda'], correct: 0 },
+        { question: 'Ergashgan gap...', answers: ['bosh gapga bog\'liq', 'mustaqil', 'sodda', 'qo\'shma'], correct: 0 },
+        { question: 'Tobelik...', answers: ['bog\'lanish turi', 'gap turi', 'so\'z turkumi', 'qo\'shimcha'], correct: 0 },
+        { question: 'Egalik qo\'shimchalari nechta?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Kelishik qo\'shimchalari nechta?', answers: ['4', '5', '6', '7'], correct: 2 },
+        { question: 'Qaratqich kelishigi qaysi?', answers: ['-ning', '-ni', '-ga', '-da'], correct: 0 },
+        { question: 'Tushum kelishigi qaysi?', answers: ['-ning', '-ni', '-ga', '-da'], correct: 1 },
+        { question: 'Jo\'nalish kelishigi qaysi?', answers: ['-ning', '-ni', '-ga', '-da'], correct: 2 }
+      ]
+    }
+  },
+  
+  // ========== 9-A SINF TESTLARI ==========
+  '9a': {
+    'matematika': {
+      title: '🔢 Matematika (9-sinf)',
+      icon: '🔢',
+      time: 40,
+      questions: [
+        { question: 'sin 30° = ?', answers: ['0', '1/2', '√2/2', '√3/2'], correct: 1 },
+        { question: 'cos 60° = ?', answers: ['0', '1/2', '√2/2', '√3/2'], correct: 1 },
+        { question: 'tg 45° = ?', answers: ['0', '1', '√3', '1/√3'], correct: 1 },
+        { question: 'sin²α + cos²α = ?', answers: ['0', '1', '2', '-1'], correct: 1 },
+        { question: 'Vektor uzunligi formulasi?', answers: ['√(x²+y²)', 'x²+y²', 'x+y', '√(x+y)'], correct: 0 },
+        { question: 'Ikki vektor skalyar ko\'paytmasi?', answers: ['x₁x₂ + y₁y₂', 'x₁y₂ - x₂y₁', 'x₁/x₂', 'y₁/y₂'], correct: 0 },
+        { question: 'Aylana uzunligi?', answers: ['2πR', 'πR²', 'πD', '2πD'], correct: 0 },
+        { question: 'Doira yuzi?', answers: ['2πR', 'πR²', 'πD', '2πD'], correct: 1 },
+        { question: 'Arifmetik progressiya yig\'indisi?', answers: ['S = (a₁+a_n)n/2', 'S = a₁ × n', 'S = a₁ + d', 'S = a₁ × qⁿ'], correct: 0 },
+        { question: 'Geometrik progressiya yig\'indisi?', answers: ['S = a₁(1-qⁿ)/(1-q)', 'S = a₁ × n', 'S = a₁ + d', 'S = a₁ × qⁿ'], correct: 0 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (9-sinf)',
+      icon: '⚛️',
+      time: 35,
+      questions: [
+        { question: 'Nyutonning 1-qonuni?', answers: ['F = ma', 'Inersiya qonuni', 'Ta\'sir va aks ta\'sir', 'Energiya saqlanish'], correct: 1 },
+        { question: 'Nyutonning 2-qonuni?', answers: ['F = ma', 'Inersiya', 'Ta\'sir va aks ta\'sir', 'Energiya saqlanish'], correct: 0 },
+        { question: 'Nyutonning 3-qonuni?', answers: ['F = ma', 'Inersiya', 'Ta\'sir va aks ta\'sir', 'Energiya saqlanish'], correct: 2 },
+        { question: 'Impuls formulasi?', answers: ['p = mv', 'p = ma', 'p = Ft', 'p = mgh'], correct: 0 },
+        { question: 'Energiya saqlanish qonuni?', answers: ['E = mc²', 'E₁ = E₂', 'F = ma', 'W = Fs'], correct: 1 },
+        { question: 'Potensial energiya formulasi?', answers: ['E_p = mgh', 'E_k = mv²/2', 'E = mc²', 'W = Fs'], correct: 0 },
+        { question: 'Kinetik energiya?', answers: ['E_p = mgh', 'E_k = mv²/2', 'E = mc²', 'W = Fs'], correct: 1 },
+        { question: 'Quvvat formulasi?', answers: ['N = A/t', 'A = Fs', 'E = mc²', 'p = mv'], correct: 0 },
+        { question: 'Tok kuchi formulasi?', answers: ['I = q/t', 'U = IR', 'R = U/I', 'P = UI'], correct: 0 },
+        { question: 'Om qonuni?', answers: ['I = U/R', 'U = IR', 'R = U/I', 'P = UI'], correct: 0 }
+      ]
+    },
+    'kimyo': {
+      title: '🧪 Kimyo (9-sinf)',
+      icon: '🧪',
+      time: 30,
+      questions: [
+        { question: 'Mendeleyev jadvalida nechta element bor?', answers: ['98', '108', '118', '128'], correct: 2 },
+        { question: 'D.I.Mendeleyev qanday qonunni kashf etgan?', answers: ['Davriy qonun', 'Saqlanish qonuni', 'Tortishish qonuni', 'Arximed qonuni'], correct: 0 },
+        { question: 'Atomdagi protonlar soni...', answers: ['tartib raqamiga teng', 'neytronlar soniga teng', 'elektronlar soniga teng', 'A va C'], correct: 3 },
+        { question: 'Izotoplar...', answers: ['protonlari har xil', 'neytronlari har xil', 'elektronlari har xil', 'hammasi har xil'], correct: 1 },
+        { question: 'Kimyoviy bog\'lanish turlari?', answers: ['2', '3', '4', '5'], correct: 2 },
+        { question: 'Kovalent bog\'lanish...', answers: ['elektron almashinadi', 'elektron beriladi', 'elektron olinadi', 'ionlar hosil bo\'ladi'], correct: 0 },
+        { question: 'Ion bog\'lanish...', answers: ['elektron almashinadi', 'elektron beriladi va olinadi', 'umumiy elektron', 'vodorod bog\'i'], correct: 1 },
+        { question: 'Oksidlanish darajasi nima?', answers: ['shartli zaryad', 'haqiqiy zaryad', 'atom massasi', 'valentlik'], correct: 0 },
+        { question: 'Kislotali oksidlar...', answers: ['metallar bilan', 'nometallar bilan', 'asoslar bilan', 'tuzlar bilan'], correct: 1 },
+        { question: 'Asosli oksidlar...', answers: ['metallar bilan', 'nometallar bilan', 'asoslar bilan', 'tuzlar bilan'], correct: 0 }
+      ]
+    }
+  },
+  
+  // ========== 9-B SINF TESTLARI ==========
+  '9b': {
+    'matematika': {
+      title: '🔢 Matematika (9-sinf)',
+      icon: '🔢',
+      time: 40,
+      questions: [
+        { question: 'sin 30° = ?', answers: ['0', '1/2', '√2/2', '√3/2'], correct: 1 },
+        { question: 'cos 60° = ?', answers: ['0', '1/2', '√2/2', '√3/2'], correct: 1 },
+        { question: 'tg 45° = ?', answers: ['0', '1', '√3', '1/√3'], correct: 1 },
+        { question: 'sin²α + cos²α = ?', answers: ['0', '1', '2', '-1'], correct: 1 },
+        { question: 'Vektor uzunligi formulasi?', answers: ['√(x²+y²)', 'x²+y²', 'x+y', '√(x+y)'], correct: 0 },
+        { question: 'Ikki vektor skalyar ko\'paytmasi?', answers: ['x₁x₂ + y₁y₂', 'x₁y₂ - x₂y₁', 'x₁/x₂', 'y₁/y₂'], correct: 0 },
+        { question: 'Aylana uzunligi?', answers: ['2πR', 'πR²', 'πD', '2πD'], correct: 0 },
+        { question: 'Doira yuzi?', answers: ['2πR', 'πR²', 'πD', '2πD'], correct: 1 },
+        { question: 'Arifmetik progressiya yig\'indisi?', answers: ['S = (a₁+a_n)n/2', 'S = a₁ × n', 'S = a₁ + d', 'S = a₁ × qⁿ'], correct: 0 },
+        { question: 'Geometrik progressiya yig\'indisi?', answers: ['S = a₁(1-qⁿ)/(1-q)', 'S = a₁ × n', 'S = a₁ + d', 'S = a₁ × qⁿ'], correct: 0 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (9-sinf)',
+      icon: '⚛️',
+      time: 35,
+      questions: [
+        { question: 'Nyutonning 1-qonuni?', answers: ['F = ma', 'Inersiya qonuni', 'Ta\'sir va aks ta\'sir', 'Energiya saqlanish'], correct: 1 },
+        { question: 'Nyutonning 2-qonuni?', answers: ['F = ma', 'Inersiya', 'Ta\'sir va aks ta\'sir', 'Energiya saqlanish'], correct: 0 },
+        { question: 'Nyutonning 3-qonuni?', answers: ['F = ma', 'Inersiya', 'Ta\'sir va aks ta\'sir', 'Energiya saqlanish'], correct: 2 },
+        { question: 'Impuls formulasi?', answers: ['p = mv', 'p = ma', 'p = Ft', 'p = mgh'], correct: 0 },
+        { question: 'Energiya saqlanish qonuni?', answers: ['E = mc²', 'E₁ = E₂', 'F = ma', 'W = Fs'], correct: 1 },
+        { question: 'Potensial energiya formulasi?', answers: ['E_p = mgh', 'E_k = mv²/2', 'E = mc²', 'W = Fs'], correct: 0 },
+        { question: 'Kinetik energiya?', answers: ['E_p = mgh', 'E_k = mv²/2', 'E = mc²', 'W = Fs'], correct: 1 },
+        { question: 'Quvvat formulasi?', answers: ['N = A/t', 'A = Fs', 'E = mc²', 'p = mv'], correct: 0 },
+        { question: 'Tok kuchi formulasi?', answers: ['I = q/t', 'U = IR', 'R = U/I', 'P = UI'], correct: 0 },
+        { question: 'Om qonuni?', answers: ['I = U/R', 'U = IR', 'R = U/I', 'P = UI'], correct: 0 }
+      ]
+    },
+    'kimyo': {
+      title: '🧪 Kimyo (9-sinf)',
+      icon: '🧪',
+      time: 30,
+      questions: [
+        { question: 'Mendeleyev jadvalida nechta element bor?', answers: ['98', '108', '118', '128'], correct: 2 },
+        { question: 'D.I.Mendeleyev qanday qonunni kashf etgan?', answers: ['Davriy qonun', 'Saqlanish qonuni', 'Tortishish qonuni', 'Arximed qonuni'], correct: 0 },
+        { question: 'Atomdagi protonlar soni...', answers: ['tartib raqamiga teng', 'neytronlar soniga teng', 'elektronlar soniga teng', 'A va C'], correct: 3 },
+        { question: 'Izotoplar...', answers: ['protonlari har xil', 'neytronlari har xil', 'elektronlari har xil', 'hammasi har xil'], correct: 1 },
+        { question: 'Kimyoviy bog\'lanish turlari?', answers: ['2', '3', '4', '5'], correct: 2 },
+        { question: 'Kovalent bog\'lanish...', answers: ['elektron almashinadi', 'elektron beriladi', 'elektron olinadi', 'ionlar hosil bo\'ladi'], correct: 0 },
+        { question: 'Ion bog\'lanish...', answers: ['elektron almashinadi', 'elektron beriladi va olinadi', 'umumiy elektron', 'vodorod bog\'i'], correct: 1 },
+        { question: 'Oksidlanish darajasi nima?', answers: ['shartli zaryad', 'haqiqiy zaryad', 'atom massasi', 'valentlik'], correct: 0 },
+        { question: 'Kislotali oksidlar...', answers: ['metallar bilan', 'nometallar bilan', 'asoslar bilan', 'tuzlar bilan'], correct: 1 },
+        { question: 'Asosli oksidlar...', answers: ['metallar bilan', 'nometallar bilan', 'asoslar bilan', 'tuzlar bilan'], correct: 0 }
+      ]
+    }
+  },
+  
+  // ========== 10-A SINF TESTLARI ==========
+  '10a': {
+    'matematika': {
+      title: '🔢 Matematika (10-sinf)',
+      icon: '🔢',
+      time: 45,
+      questions: [
+        { question: 'lim (x→0) sin x / x = ?', answers: ['0', '1', '∞', 'bilan'], correct: 1 },
+        { question: 'Hosila nima?', answers: ['o\'zgarish tezligi', 'funksiya', 'limit', 'integral'], correct: 0 },
+        { question: '(xⁿ)\' = ?', answers: ['nxⁿ⁻¹', 'xⁿ⁻¹', 'n/xⁿ⁻¹', 'xⁿ'], correct: 0 },
+        { question: '(sin x)\' = ?', answers: ['cos x', '-cos x', 'sin x', '-sin x'], correct: 0 },
+        { question: '(cos x)\' = ?', answers: ['cos x', '-cos x', 'sin x', '-sin x'], correct: 3 },
+        { question: 'e^x ning hosilasi?', answers: ['e^x', 'xe^x⁻¹', 'ln x', '1/x'], correct: 0 },
+        { question: 'ln x ning hosilasi?', answers: ['e^x', '1/x', 'x', 'ln x'], correct: 1 },
+        { question: 'Funksiyaning ekstremum nuqtalari?', answers: ['hosila nolga teng', 'hosila mavjud emas', 'A va B', 'limit'], correct: 0 },
+        { question: 'Integral nima?', answers: ['yig\'indi', 'hosilaga teskari', 'limit', 'funksiya'], correct: 1 },
+        { question: '∫ xⁿ dx = ?', answers: ['xⁿ⁺¹/(n+1)+C', 'nxⁿ⁻¹', 'xⁿ+ C', 'nxⁿ⁺¹'], correct: 0 }
+      ]
+    },
+    'fizika': {
+      title: '⚛️ Fizika (10-sinf)',
+      icon: '⚛️',
+      time: 40,
+      questions: [
+        { question: 'Elektr maydon kuchlanganligi formulasi?', answers: ['E = F/q', 'E = kq/r²', 'E = U/d', 'Hammasi to\'g\'ri'], correct: 3 },
+        { question: 'Kondensator sig\'imi formulasi?', answers: ['C = q/U', 'C = ε₀S/d', 'C = ε₀εS/d', 'Hammasi to\'g\'ri'], correct: 3 },
+        { question: 'Magnit maydon induksiyasi birligi?', answers: ['Tesla', 'Veb', 'Gauss', 'Amper'], correct: 0 },
+        { question: 'Elektromagnit induksiya qonuni kim tomonidan kashf etilgan?', answers: ['Faradey', 'Maksvell', 'Nyuton', 'Om'], correct: 0 },
+        { question: 'O\'zgaruvchan tok chastotasi O\'zbekistonda?', answers: ['50 Hz', '60 Hz', '100 Hz', '220 Hz'], correct: 0 },
+        { question: 'Transformator nima?', answers: ['kuchlanishni o\'zgartiradi', 'tokni o\'zgartiradi', 'quvvatni o\'zgartiradi', 'qarshilikni o\'zgartiradi'], correct: 0 },
+        { question: 'Yorug\'lik dispersiyasi nima?', answers: ['ranglarga ajralishi', 'sinishi', 'qaytishi', 'yutilishi'], correct: 0 },
+        { question: 'Linzaning optik kuchi birligi?', answers: ['Dioptriya', 'Metr', 'Santimetr', 'Vatt'], correct: 0 },
+        { question: 'Yorug\'lik tezligi vakuumda?', answers: ['3·10⁸ m/s', '3·10⁵ m/s', '3·10⁶ m/s', '3·10⁷ m/s'], correct: 0 },
+        { question: 'Foton energiyasi formulasi?', answers: ['E = hν', 'E = mc²', 'E = mv²/2', 'E = mgh'], correct: 0 }
+      ]
+    },
+    'kimyo': {
+      title: '🧪 Kimyo (10-sinf)',
+      icon: '🧪',
+      time: 35,
+      questions: [
+        { question: 'Organik birikmalar tarkibida qaysi element bo\'ladi?', answers: ['Uglerod', 'Kislorod', 'Vodorod', 'Azot'], correct: 0 },
+        { question: 'Alkanlarning umumiy formulasi?', answers: ['CₙH₂ₙ₊₂', 'CₙH₂ₙ', 'CₙH₂ₙ₋₂', 'CₙH₂ₙ₊₁'], correct: 0 },
+        { question: 'Alkenlarning umumiy formulasi?', answers: ['CₙH₂ₙ₊₂', 'CₙH₂ₙ', 'CₙH₂ₙ₋₂', 'CₙH₂ₙ₊₁'], correct: 1 },
+        { question: 'Alkinlarning umumiy formulasi?', answers: ['CₙH₂ₙ₊₂', 'CₙH₂ₙ', 'CₙH₂ₙ₋₂', 'CₙH₂ₙ₊₁'], correct: 2 },
+        { question: 'Benzol formulasi?', answers: ['C₆H₆', 'C₆H₁₂', 'C₆H₁₄', 'C₆H₁₀'], correct: 0 },
+        { question: 'Spirtlarning funksional guruhi?', answers: ['-OH', '-COOH', '-CHO', '-NH₂'], correct: 0 },
+        { question: 'Aldegidlarning funksional guruhi?', answers: ['-OH', '-COOH', '-CHO', '-NH₂'], correct: 2 },
+        { question: 'Karbon kislotalarning funksional guruhi?', answers: ['-OH', '-COOH', '-CHO', '-NH₂'], correct: 1 },
+        { question: 'Polimerlanish reaksiyasi nima?', answers: ['molekulalarning birikishi', 'molekulalarning parchalanishi', 'atomlarning almashinishi', 'ionlarning hosil bo\'lishi'], correct: 0 },
+        { question: 'Esterlanish reaksiyasi natijasida nima hosil bo\'ladi?', answers: ['Efir', 'Spirt', 'Kislota', 'Aldegid'], correct: 0 }
+      ]
+    },
+    'biologiya': {
+      title: '🧬 Biologiya (10-sinf)',
+      icon: '🧬',
+      time: 35,
+      questions: [
+        { question: 'Hujayraning energiya ishlab chiqaruvchi organoidi?', answers: ['Mitoxondriya', 'Yadro', 'Ribosoma', 'Golji'], correct: 0 },
+        { question: 'Fotosintez jarayoni qayerda sodir bo\'ladi?', answers: ['Xloroplast', 'Mitoxondriya', 'Yadro', 'Vakuola'], correct: 0 },
+        { question: 'DNK tarkibida qanday qandlar bor?', answers: ['Dezoksiriboza', 'Riboza', 'Glyukoza', 'Fruktoza'], correct: 0 },
+        { question: 'RNK tarkibida qanday qandlar bor?', answers: ['Dezoksiriboza', 'Riboza', 'Glyukoza', 'Fruktoza'], correct: 1 },
+        { question: 'Genetika qonunlarini kim kashf etgan?', answers: ['Mendel', 'Darvin', 'Lamark', 'Pavlov'], correct: 0 },
+        { question: 'Odamda nechta xromosoma bor?', answers: ['46', '48', '44', '42'], correct: 0 },
+        { question: 'Ayol jinsiy xromosomalari?', answers: ['XX', 'XY', 'YY', 'XO'], correct: 0 },
+        { question: 'Erkak jinsiy xromosomalari?', answers: ['XX', 'XY', 'YY', 'XO'], correct: 1 },
+        { question: 'Oqsillar qanday monomerlardan tashkil topgan?', answers: ['Aminokislotalar', 'Nukleotidlar', 'Glyukoza', 'Yog\' kislotalari'], correct: 0 },
+        { question: 'Vitaminlar qanday vazifani bajaradi?', answers: ['Moddalar almashinuvini tartibga soladi', 'Energiya beradi', 'Qurilish materiali', 'Himoya vazifasi'], correct: 0 }
+      ]
+    }
+  },
+  
+  // ========== KOMBINATSION TEST (Barcha sinflar uchun) ==========
+  'katta-test': {
+    title: '🎯 Kombinatsion test',
+    icon: '🎯',
+    time: 60,
+    questions: [
+      { question: '5 + 7 = ?', answers: ['10', '11', '12', '13'], correct: 2 },
+      { question: 'O\'zbek alifbosida nechta harf?', answers: ['28', '29', '30', '31'], correct: 1 },
+      { question: '"Hello" meaning?', answers: ['Xayr', 'Salom', 'Rahmat', 'Kechirasiz'], correct: 1 },
+      { question: 'Yorug\'lik tezligi?', answers: ['300 000 km/s', '150 000 km/s', '500 000 km/s', '1 000 000 km/s'], correct: 0 },
+      { question: 'Suv formulasi?', answers: ['H₂O', 'CO₂', 'O₂', 'N₂'], correct: 0 },
+      { question: 'Inson tanasida nechta suyak?', answers: ['106', '206', '306', '406'], correct: 1 },
+      { question: '√144 = ?', answers: ['10', '11', '12', '13'], correct: 2 },
+      { question: '"Kitob" so\'zida nechta harf?', answers: ['4', '5', '6', '7'], correct: 1 },
+      { question: 'I ___ a student.', answers: ['am', 'is', 'are', 'be'], correct: 0 },
+      { question: 'Kuch birligi?', answers: ['Nyuton', 'Joul', 'Vatt', 'Paskal'], correct: 0 },
+      { question: 'Kislorodning belgisi?', answers: ['O', 'K', 'H', 'N'], correct: 0 },
+      { question: 'Yurak qaysi sistemaga kiradi?', answers: ['Nerv', 'Qon aylanish', 'Nafas olish', 'Hazm qilish'], correct: 1 },
+      { question: '3x + 5 = 20, x = ?', answers: ['3', '4', '5', '6'], correct: 2 },
+      { question: 'Gap oxiriga qanday belgi qo\'yiladi?', answers: ['!', '?', '.', ','], correct: 2 },
+      { question: 'What is "cat"?', answers: ['It', 'Mushuk', 'Sigir', 'Ot'], correct: 1 },
+      { question: 'Suvning qaynash harorati?', answers: ['0°C', '50°C', '100°C', '200°C'], correct: 2 },
+      { question: 'Natriy xlorid formulasi?', answers: ['NaCl', 'KCl', 'CaCl₂', 'MgCl₂'], correct: 0 },
+      { question: 'Qonning rangini nima beradi?', answers: ['Gemoglobin', 'Plazma', 'Trombotsit', 'Leykotsit'], correct: 0 }
+    ]
+  }
+};
+
+    const CLASS_LABELS = { '5': '5-sinf', '6a': '6-A sinf', '6b': '6-B sinf', '7a': '7-A sinf', '7b': '7-B sinf', '8a': '8-A sinf', '8b': '8-B sinf', '9a': '9-A sinf', '9b': '9-B sinf', '10a': '10-A sinf' };
+    const HKEY = 'jalolmirzo_test_results';
+    const UKEY = 'jalolmirzo_test_user';
+
+    let curClass = '5', curSubject = null, test = null;
+    let questions = [], answers = [], cur = 0, timeLeft = 0, timer = null, startTime = 0, finished = false, rtProfile = null;
+
+    const $ = function (id) { return document.getElementById(id); };
+    const els = {};
+    ['sSelect', 'sAuth', 'sTest', 'sResults', 'classPills', 'subjectGrid', 'startMsg', 'formSub',
+      'fPin', 'fPinRow', 'fPinHintBound', 'fProf', 'fProfAv', 'fProfName', 'fProfMeta',
+      'formTitle', 'formGoBtn', 'formErr',
+     'formBackBtn', 'tTitle', 'tTimer', 'tProgress', 'tProgressText', 'navGrid', 'qNum', 'qText', 'qAnswers',
+     'prevBtn', 'nextBtn', 'finishBtn', 'exitBtn', 'resCircle', 'resPct', 'resCorrect', 'resTotal', 'resTime',
+     'resPoints', 'resMsg', 'retryBtn', 'reviewBtn', 'reviewBox', 'reviewList', 'selectBtn', 'histBox', 'histList']
+      .forEach(function (id) { els[id] = $(id); });
+
+    function shuffle(a) {
+      a = a.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    function hueOf(s) { var h = 0; s = String(s); for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 997; return h % 6; }
+    function boundProfile() {
+      var bid = (typeof RT !== 'undefined') ? RT.lastPid() : null;
+      return bid ? RT.profiles().filter(function (p) { return p.id === bid; })[0] : null;
+    }
+    function renderAuth() {
+      var boundP = boundProfile();
+      if (boundP) {
+        els.fProf.style.display = 'flex';
+        els.fProfAv.className = 'f-prof-av c' + hueOf(boundP.id + boundP.name);
+        els.fProfAv.textContent = boundP.name.charAt(0).toUpperCase();
+        els.fProfName.textContent = boundP.name + ' ' + boundP.surname;
+        els.fProfMeta.textContent = boundP.klass + ' sinf';
+        els.formTitle.textContent = 'Profilga kirish';
+        els.formGoBtn.textContent = '🔑 Kirish';
+      } else {
+        els.fProf.style.display = 'none';
+        els.formTitle.textContent = 'Kirish';
+        els.formGoBtn.textContent = '🔑 Kirish';
+      }
+      els.fPinHintBound.style.display = boundP ? '' : 'none';
+      els.fPin.value = '';
+      els.formErr.classList.remove('show');
+    }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function fmt(s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+    function fmtDate(iso) {
+      const d = new Date(iso);
+      const months = ['yan', 'fev', 'mar', 'apr', 'may', 'iyn', 'iyl', 'avg', 'sen', 'okt', 'noy', 'dek'];
+      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ', ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    }
+    function showScreen(name) {
+      const map = { select: 'sSelect', auth: 'sAuth', test: 'sTest', results: 'sResults' };
+      Object.keys(map).forEach(function (k) { els[map[k]].classList.toggle('active', k === name); });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ===== TARIX (keyinchalik reyting asosi) ===== */
+    function loadHistory() { try { return JSON.parse(localStorage.getItem(HKEY)) || []; } catch (e) { return []; } }
+    function saveHistory(r) {
+      const h = loadHistory();
+      h.unshift(r);
+      if (h.length > 200) h.length = 200;
+      try { localStorage.setItem(HKEY, JSON.stringify(h)); } catch (e) {}
+    }
+    function loadUser() { try { return JSON.parse(localStorage.getItem(UKEY)) || {}; } catch (e) { return {}; } }
+    function saveUser(n, s) { try { localStorage.setItem(UKEY, JSON.stringify({ name: n, surname: s })); } catch (e) {} }
+
+    /* ===== TANLASH EKRANI ===== */
+    function renderPills() {
+      els.classPills.innerHTML = Object.keys(CLASS_LABELS).map(function (c) {
+        return '<button type="button" class="cls-pill' + (c === curClass ? ' active' : '') + '" data-cls="' + c + '">' + CLASS_LABELS[c] + '</button>';
+      }).join('');
+    }
+    els.classPills.addEventListener('click', function (e) {
+      const b = e.target.closest('.cls-pill');
+      if (!b) return;
+      curClass = b.dataset.cls;
+      curSubject = null;
+      renderPills();
+      renderSubjects();
+    });
+
+    function renderSubjects() {
+      let html = TestGen.subjectsFor(curClass).map(function (s) {
+        const gen = TestGen.genInfo(curClass, s.id);
+        const stat = testData[curClass] && testData[curClass][s.id];
+        const ok = gen || stat;
+        const meta = gen ? (gen.count ? gen.count + ' savol · ' + gen.time + ' daqiqa' : 'Cheksiz savol · ' + gen.time + ' daqiqa') : stat ? stat.questions.length + ' savol · ' + stat.time + ' daqiqa' : 'Savollar tayyorlanmoqda';
+        return '<button type="button" class="subj-card" data-subj="' + s.id + '"' + (ok ? '' : ' disabled') + '>' +
+          '<span class="subj-icon">' + s.icon + '</span>' +
+          '<span class="subj-name">' + s.name + '</span>' +
+          '<span class="subj-meta">' + meta + '</span>' +
+          '</button>';
+      }).join('');
+      const kt = testData['katta-test'];
+      html += '<button type="button" class="subj-card katta" data-subj="katta-test">' +
+        '<span class="subj-icon">🎯</span>' +
+        '<span class="subj-name">Kombinatsion test</span>' +
+        '<span class="subj-meta">' + kt.questions.length + ' savol · ' + kt.time + ' daqiqa · barcha fanlar</span>' +
+        '</button>';
+      els.subjectGrid.innerHTML = html;
+    }
+    els.subjectGrid.addEventListener('click', function (e) {
+      const b = e.target.closest('.subj-card');
+      if (!b || b.disabled) return;
+      curSubject = b.dataset.subj;
+      hideMsg();
+      const label = curSubject === 'katta-test' ? '🎯 Kombinatsion test' : ((TestGen.subjectsFor(curClass).find(function (s) { return s.id === curSubject; }) || {}).name || curSubject);
+      els.formSub.textContent = CLASS_LABELS[curClass] + ' · ' + label;
+      var prof = (typeof RT !== 'undefined' && RT.session()) ? RT.profiles().filter(function (p) { return p.id === RT.session(); })[0] : null;
+      if (prof) {
+        // KIRILGAN — test darhol boshlanadi (ism/PIN so'ralmaydi)
+        checkLimitAndStart(prof.name, prof.surname, prof.id);
+      } else {
+        // KIRILMAGAN — kirish ekrani (faqat PIN)
+        renderAuth();
+        showScreen('auth');
+      }
+    });
+
+    /* ===== KIRISH (standart: sessiya yo'q faqat, faqat PIN) =====
+       Profilsiz test boshlanmaydi. Kirilgach butun ilova shu profil bilan ishlaydi. */
+    var msgTimer = null;
+    function showMsg(t) {
+      els.startMsg.textContent = t;
+      els.startMsg.style.display = 'block';
+      clearTimeout(msgTimer);
+      msgTimer = setTimeout(hideMsg, 4500);
+    }
+    function hideMsg() { els.startMsg.style.display = 'none'; }
+    function checkLimitAndStart(name, surname, pid) {
+      rtProfile = null;
+      if (typeof RT !== 'undefined' && curSubject !== 'katta-test') {
+        var lim = RT.canTake(pid, curSubject, curClass);
+        if (!lim.ok) {
+          showScreen('select');
+          showMsg("Bugun shu fandan 3 test topshirdingiz. Kalta ta'til — ertaga yana bo'ladi!");
+          return false;
+        }
+        rtProfile = RT.profiles().filter(function (p) { return p.id === pid; })[0] || null;
+      }
+      beginTest(name, surname);
+      return true;
+    }
+    function afterLogin(prof) {
+      saveUser(prof.name, prof.surname);
+      if (!curSubject) { showScreen('select'); return; }
+      checkLimitAndStart(prof.name, prof.surname, prof.id);
+    }
+    $('startForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      els.formErr.classList.remove('show');
+      var boundP = boundProfile();
+      if (!boundP) {
+        els.formErr.textContent = "Bu qurilma hali o'quvchi bilan bog'lanmagan. O'qituvchiga murojaat qiling.";
+        els.formErr.classList.add('show');
+        return;
+      }
+      var resB = RT.loginById(boundP.id, els.fPin.value);
+      if (!resB.ok) {
+        els.formErr.textContent = resB.err;
+        els.formErr.classList.add('show');
+        return;
+      }
+      els.fPin.value = '';
+      afterLogin({ name: boundP.name, surname: boundP.surname, id: boundP.id });
+    });
+    els.formBackBtn.addEventListener('click', function () { showScreen('select'); });
+
+    /* ===== TEST JARIYONI ===== */
+    function beginTest(name, surname) {
+      const src = curSubject === 'katta-test' ? testData['katta-test'] : (TestGen.generate(curClass, curSubject) || (testData[curClass] && testData[curClass][curSubject]) || null);
+      if (!src) return;
+      // Har topshirishda savollar va javob variantlari aralashtiriladi
+      questions = shuffle(src.questions.map(function (q) {
+        const opts = shuffle(q.answers.map(function (t, i) { return { t: t, ok: i === q.correct }; }));
+        return { q: q.question, opts: opts };
+      }));
+      answers = new Array(questions.length).fill(undefined);
+      cur = 0;
+      timeLeft = src.time * 60;
+      startTime = Date.now();
+      finished = false;
+      test = { src: src, name: name, surname: surname };
+      els.tTitle.textContent = src.title;
+      els.reviewBox.classList.remove('show');
+      if (timer) clearInterval(timer);
+      timer = setInterval(tick, 1000);
+      renderTimer();
+      renderQuestion();
+      showScreen('test');
+    }
+
+    function renderTimer() {
+      els.tTimer.textContent = '⏱️ ' + fmt(timeLeft);
+      els.tTimer.classList.toggle('urgent', timeLeft <= 60 && timeLeft > 0);
+    }
+    function tick() {
+      if (finished) return;
+      timeLeft--;
+      if (timeLeft <= 0) { timeLeft = 0; renderTimer(); finishTest(true); return; }
+      renderTimer();
+      if (timeLeft === 60) { try { if (navigator.vibrate) navigator.vibrate(200); } catch (e) {} }
+    }
+
+    function renderQuestion() {
+      const n = questions.length;
+      const q = questions[cur];
+      els.qNum.textContent = 'Savol ' + (cur + 1) + ' / ' + n;
+      els.qText.textContent = q.q;
+      els.qAnswers.innerHTML = q.opts.map(function (o, i) {
+        return '<button type="button" class="ans' + (answers[cur] === i ? ' sel' : '') + '" data-i="' + i + '"><span class="ans-letter">' + 'ABCD'[i] + '</span><span>' + esc(o.t) + '</span></button>';
+      }).join('');
+      const answered = answers.filter(function (a) { return a !== undefined; }).length;
+      els.tProgress.style.width = ((cur + 1) / n * 100) + '%';
+      els.tProgressText.textContent = 'Javob berildi: ' + answered + '/' + n;
+      els.navGrid.innerHTML = questions.map(function (_, i) {
+        return '<button type="button" class="nav-dot' + (i === cur ? ' cur' : '') + (answers[i] !== undefined ? ' done' : '') + '" data-i="' + i + '">' + (i + 1) + '</button>';
+      }).join('');
+      els.prevBtn.disabled = cur === 0;
+      els.nextBtn.style.display = cur === n - 1 ? 'none' : '';
+      els.finishBtn.style.display = cur === n - 1 ? '' : 'none';
+    }
+
+    els.qAnswers.addEventListener('click', function (e) {
+      const b = e.target.closest('.ans');
+      if (!b) return;
+      answers[cur] = +b.dataset.i;
+      renderQuestion();
+    });
+    els.navGrid.addEventListener('click', function (e) {
+      const b = e.target.closest('.nav-dot');
+      if (!b) return;
+      cur = +b.dataset.i;
+      renderQuestion();
+    });
+    els.prevBtn.addEventListener('click', function () { if (cur > 0) { cur--; renderQuestion(); } });
+    els.nextBtn.addEventListener('click', function () { if (cur < questions.length - 1) { cur++; renderQuestion(); } });
+    els.finishBtn.addEventListener('click', function () { finishTest(false); });
+    els.exitBtn.addEventListener('click', function () {
+      if (finished) { showScreen('select'); return; }
+      if (!confirm('Testni tark etishga ishonchingiz komilmi? Javoblar saqlanmaydi.')) return;
+      if (timer) clearInterval(timer);
+      finished = true;
+      showScreen('select');
+    });
+
+    /* ===== YUBORISH VA NATIJA ===== */
+    function finishTest(auto) {
+      if (finished) return;
+      const unanswered = answers.filter(function (a) { return a === undefined; }).length;
+      if (!auto && unanswered > 0 && !confirm(unanswered + ' ta savolga javob berilmadi. Shunday ham tugatamizmi?')) return;
+      finished = true;
+      if (timer) clearInterval(timer);
+      let correct = 0;
+      questions.forEach(function (q, i) { if (answers[i] !== undefined && q.opts[answers[i]].ok) correct++; });
+      const total = questions.length;
+      const pct = Math.round(correct / total * 100);
+      const secs = Math.min(Math.floor((Date.now() - startTime) / 1000), test.src.time * 60);
+      const isKatta = curSubject === 'katta-test';
+      const subjName = isKatta ? 'Kombinatsion test' : ((TestGen.subjectsFor(curClass).find(function (s) { return s.id === curSubject; }) || { name: curSubject }).name);
+      // Reyting balli (1 savol = savol qiymati, bir martalik qoida bilan)
+      let rtGain = null;
+      if (typeof RT !== 'undefined' && rtProfile) {
+        rtGain = RT.recordTest({
+          pid: rtProfile.id, fan: curSubject, sinf: parseInt(curClass, 10),
+          qs: questions.map(function (q, i) { return { q: q.q, ok: answers[i] !== undefined && !!q.opts[answers[i]].ok }; }),
+          correct: correct, total: total, pct: pct, secs: secs, date: new Date().toISOString()
+        });
+      }
+      const dispBall = rtGain ? rtGain.ball : (typeof RT !== 'undefined' && !isKatta ? correct * RT.val(curClass) : correct * 10);
+      // Reyting uchun ham mos struktura: ism + sinf + fan + ball + sana
+      saveHistory({
+        name: test.name, surname: test.surname,
+        klass: isKatta ? 'katta' : curClass,
+        klassLabel: isKatta ? 'Kombinatsion' : CLASS_LABELS[curClass],
+        fan: curSubject, fanLabel: subjName,
+        correct: correct, total: total, pct: pct, secs: secs,
+        ball: dispBall,
+        date: new Date().toISOString()
+      });
+      renderResults({ correct: correct, total: total, pct: pct, secs: secs, ball: dispBall, rtGain: rtGain, rtProfile: rtProfile, isKatta: isKatta });
+      showScreen('results');
+    }
+
+    function renderResults(r) {
+      const C = 2 * Math.PI * 52;
+      els.resCircle.style.strokeDasharray = String(C);
+      els.resCircle.style.strokeDashoffset = String(C);
+      els.resCircle.style.stroke = r.pct >= 70 ? 'var(--green-600)' : r.pct >= 50 ? 'var(--amber-500)' : 'var(--blue-500)';
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        els.resCircle.style.strokeDashoffset = String(C * (1 - r.pct / 100));
+      }); });
+      els.resPct.textContent = r.pct + '%';
+      els.resCorrect.textContent = r.correct;
+      els.resTotal.textContent = r.total;
+      els.resTime.textContent = fmt(r.secs);
+      els.resPoints.textContent = r.ball != null ? r.ball : (r.correct * 10);
+      const rtLine = document.getElementById('rtGainLine');
+      if (rtLine) {
+        if (r.rtGain && r.rtProfile) {
+          rtLine.style.display = 'block';
+          rtLine.innerHTML = r.rtGain.fresh > 0
+            ? '🏆 Reytingga <b>+' + r.rtGain.ball + ' ball</b> (' + r.rtGain.fresh + ' yangi savol) · Jami: <b>' + r.rtGain.totalBall + '</b>'
+            : (r.correct > 0
+                ? '🏆 Reyting: to\'g\'ri javoblar oldindan olingan savollar — +0 (navbatdagi testda yangi savollar)'
+                : '🏆 Reytingga ball kiritilmadi (to\'g\'ri javob yo\'q)');
+        } else if (r.isKatta) {
+          rtLine.style.display = 'block';
+          rtLine.innerHTML = '🎯 Kombinatsion test reytingga kiritilmaydi (mashq rejimi)';
+        } else {
+          rtLine.style.display = 'block';
+          rtLine.innerHTML = '💡 Reytingga yozilishi uchun <a href="reyting.html" style="color:var(--blue-600);font-weight:700">profil</a> yarating';
+        }
+      }
+      const msg = els.resMsg;
+      msg.className = 'res-msg ' + (r.pct >= 90 ? 'excellent' : r.pct >= 70 ? 'good' : r.pct >= 50 ? 'average' : 'poor');
+      msg.textContent = r.pct >= 90 ? '🎉 Ajoyib! Bilimingiz juda yaxshi!' : r.pct >= 70 ? '👍 Yaxshi natija! Ozgina mashq qilsangiz yetarli.' : r.pct >= 50 ? '📚 Qoniqarli. Ko\u2018proq mashq qilishingiz kerak.' : '💪 Xafa bo\u2018lmasiz — qayta urinib ko\u2018ring!';
+      // Batafsil tahlil
+      els.reviewList.innerHTML = questions.map(function (q, i) {
+        const a = answers[i];
+        const isOk = a !== undefined && q.opts[a].ok;
+        const skip = a === undefined;
+        const cls = isOk ? 'ok' : (skip ? 'skip' : 'bad');
+        let h = '<div class="rv-item ' + cls + '"><span class="rv-num">' + (i + 1) + '</span><div class="rv-body"><div class="rv-q">' + esc(q.q) + '</div>';
+        h += skip
+          ? '<div class="rv-your">Javob berilmadi</div>'
+          : '<div class="rv-your">Sizning javobingiz: <b>' + esc(q.opts[a].t) + '</b></div>';
+        if (!isOk) h += '<div class="rv-correct">To\u2018g\u2018ri javob: <b>' + esc(q.opts.find(function (o) { return o.ok; }).t) + '</b></div>';
+        h += '</div><span class="rv-mark">' + (isOk ? '✅' : (skip ? '⏭️' : '❌')) + '</span></div>';
+        return h;
+      }).join('');
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const h = loadHistory().slice(0, 5);
+      if (!h.length) { els.histBox.classList.remove('show'); return; }
+      els.histBox.classList.add('show');
+      els.histList.innerHTML = h.map(function (r, i) {
+        return '<div class="hist-item' + (i === 0 ? ' latest' : '') + '"><span class="hist-fan">' + esc(r.fanLabel) + ' · ' + esc(r.klassLabel) + '</span><span class="hist-date">' + fmtDate(r.date) + '</span><span class="hist-pct">' + r.pct + '%</span></div>';
+      }).join('');
+    }
+
+    els.retryBtn.addEventListener('click', function () {
+      if (test) beginTest(test.name, test.surname);
+    });
+    els.reviewBtn.addEventListener('click', function () { els.reviewBox.classList.toggle('show'); });
+    els.selectBtn.addEventListener('click', function () { curSubject = null; renderSubjects(); showScreen('select'); });
+
+    /* ===== BOSHLASH ===== */
+    renderPills();
+    /* ===== START ===== */
+    renderSubjects();
+    renderAuth();
+    showScreen((typeof RT !== 'undefined' && RT.session()) ? 'select' : 'auth');
+  })();
+  </script>
+</body>
+</html>
