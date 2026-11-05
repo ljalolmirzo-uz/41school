@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahifa topilmadi (404) | 41-Maktab</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-section {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .error-code {
+      font-size: 120px;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .error-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--gray-800, #1e293b);
+    }
+    body.dark .error-title { color: var(--gray-100, #f1f5f9); }
+    .error-text {
+      color: var(--gray-500, #64748b);
+      max-width: 480px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="images/logo.png" alt="41-maktab logotipi" width="50" height="50">
+        <div class="brand">
+          <h1>41-Maktab</h1>
+          <p>Bilim – kelajak kaliti</p>
+        </div>
+      </div>
+      <nav class="nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">Asosiy</a></li>
+          <li><a href="yangiliklar.html">Yangiliklar</a></li>
+          <li><a href="loyihalar.html">Loyihalar</a></li>
+          <li><a href="testlar.html">Testlar</a></li>
+          <li><a href="kutubxona.html">Kutubxona</a></li>
+          <li><a href="ai.html">AI</a></li>
+          <li><a href="aloqa.html">Aloqa</a></li>
+        
+          <li><a href="beta/index.html" class="nav-beta-btn">✨ Beta</a></li>
+        </ul>
+      </nav>
+      <div class="nav-tools">
+        <button id="dark-mode-toggle" class="dark-btn" aria-label="Qorong'u rejim">🌙</button>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menyu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <section class="error-section">
+    <div>
+      <div class="error-code">404</div>
+      <h2 class="error-title">Sahifa topilmadi</h2>
+      <p class="error-text">
+        Siz izlagan sahifa mavjud emas yoki ko'chirilgan bo'lishi mumkin.
+        Manzilda xato bo'lmaganini tekshiring yoki bosh sahifaga qayting.
+      </p>
+      <a href="index.html" class="btn btn-primary">🏠 Bosh sahifaga qaytish</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 41-Maktab. Barcha huquqlar himoyalangan.</p>
+      <address>
+        <p>👨‍💼 Direktor: Ziyayeva Ozodaxon</p>
+        <p>👨‍💻 Admin: Latifjonov Jalolmirzo</p>
+      </address>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
